@@ -3,8 +3,11 @@ package trains.feup.org.trains;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,9 +33,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -43,6 +48,7 @@ import trains.feup.org.trains.api.ServerCallback;
 import trains.feup.org.trains.model.Account;
 import trains.feup.org.trains.service.UserService;
 import trains.feup.org.trains.util.JsonUtil;
+import trains.feup.org.trains.util.ProgressHandler;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -62,15 +68,23 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private TextView mRegister;
+    private TextView mError;
+    private ProgressHandler progress;
+
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        checkLoginStatus();
+
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         mRegister = (TextView) findViewById(R.id.register);
+        mError = (TextView) findViewById(R.id.error);
 
         mRegister.setOnClickListener(new OnClickListener() {
             @Override
@@ -89,6 +103,8 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        progress = new ProgressHandler(mProgressView, mLoginFormView, this);
     }
 
 
@@ -100,13 +116,10 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void attemptLogin() {
 
-/*        if (mAuthTask != null) {
-            return;
-        }*/
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mError.setText("");
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
@@ -140,30 +153,38 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            progress.showProgress();
 
             UserService service = new UserService();
             final JSONObject[] jsonObject = new JSONObject[1];
 
-            JsonObjectRequest registerRequest = service.register(getApplicationContext(), email, password, new ServerCallback() {
+            service.login(getApplicationContext(), email, password, new ServerCallback() {
                 @Override
                 public void OnSuccess(JSONObject result) {
                     Log.i("Result", result.toString());
-                    showProgress(false);
+
+                    try {
+                        String token = result.getJSONObject("headers").getString("Authorization").substring(7);
+                        saveToken(token);
+                        startMainActivity();
+
+                    } catch (JSONException je){
+                        Log.e("TOKEN ERROR", je.toString());
+                    }
+
+                    progress.hideProgress();
                 }
 
-                //TODO CHANGE!!
                 @Override
-                public void OnError(String error) {
-                    Log.i("Result", error);
-                    showProgress(false);
+                public void OnError(int error) {
+                    Log.i("Result", String.valueOf(error));
+                    handleError(error);
+                    progress.showProgress(false);
                 }
 
 
             });
 
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
         }
     }
 
@@ -177,46 +198,44 @@ public class LoginActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
     private void startRegisterActivity(){
 
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+    }
+
+    private void startMainActivity(){
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void saveToken(String token){
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(getString(R.string.saved_token), token);
+        editor.commit();
+
+    }
+
+    private void checkLoginStatus(){
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String  data = sharedPreferences.getString(getString(R.string.saved_token), "") ;
+
+        if (data != null && !data.isEmpty()){
+            startMainActivity();
+        }
+
+    }
+
+    private void handleError(int error){
+        if (error == ServerCallback.UNAUTHORIZED){
+            mError.setText(getString(R.string.error_unauthorized));
+        }else {
+            mError.setText(getString(R.string.error_server));
+        }
     }
 
 }

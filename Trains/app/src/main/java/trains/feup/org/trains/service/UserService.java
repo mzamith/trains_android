@@ -22,9 +22,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import trains.feup.org.trains.api.ApiInvoker;
 import trains.feup.org.trains.api.ServerCallback;
 import trains.feup.org.trains.model.Account;
-import trains.feup.org.trains.util.ApiEndpoint;
+import trains.feup.org.trains.api.ApiEndpoint;
+import trains.feup.org.trains.model.Credentials;
 import trains.feup.org.trains.util.JsonUtil;
 
 /**
@@ -34,82 +36,52 @@ import trains.feup.org.trains.util.JsonUtil;
 public class UserService {
 
     SharedPreferences sharedPreferences;
-    String url = ApiEndpoint.getEndpoint() + "/register";
-    JSONObject postBody;
 
     public JsonObjectRequest register(Context context, String username, String password, final ServerCallback callback) {
 
+        String url = ApiEndpoint.getEndpoint() + "register";
+
         RequestQueue queue = Volley.newRequestQueue(context);
-        this.buildBody(username, password);
+        JSONObject postBody = this.buildAccount(username, password);
 
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, postBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            callback.OnSuccess(response);
+        JsonObjectRequest postRequest = ApiInvoker.post(url, postBody, null, callback);
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        NetworkResponse response = error.networkResponse;
-                        if (error instanceof ServerError && response != null) {
-                            try {
-
-                                if (response.statusCode == 409){
-                                    callback.OnError(ServerCallback.CONFLICT);
-                                } else {
-                                    callback.OnError(ServerCallback.INTERNAL_SERVER_ERROR);
-                                }
-
-                                String res = new String(response.data,
-                                        HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                                // Now you can use any deserializer to make sense of data
-                                JSONObject obj = new JSONObject(res);
-
-
-                            } catch (UnsupportedEncodingException e1) {
-                                // Couldn't properly decode data to string
-                                e1.printStackTrace();
-                            } catch (JSONException e2) {
-                                // returned data is not JSONObject?
-                                e2.printStackTrace();
-                            }
-                        }
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                // the POST parameters:
-                params.put("site", "code");
-                params.put("network", "tutsplus");
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json; charset=utf-8");
-                return params;
-            };
-        };
         queue.add(postRequest);
         return postRequest;
     };
 
-    private void buildBody(String username, String password){
+    public void login(Context context, String username, String password, final ServerCallback callback){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        JSONObject postBody = this.buildCredentials(username, password);
+
+        JsonObjectRequest loginRequest = ApiInvoker.login(postBody, callback);
+
+        queue.add(loginRequest);
+
+    }
+
+    private JSONObject buildAccount(String username, String password){
         try{
-            postBody = new JSONObject(JsonUtil.serialize(new Account(username, password)));
+            JSONObject postBody = new JSONObject(JsonUtil.serialize(new Account(username, password)));
+            return postBody;
+
         }catch (JSONException e){
             Log.e("Exception in Service", "Error serializing Account");
+            return null;
         }
-    }
+    };
+
+    private JSONObject buildCredentials(String username, String password){
+        try{
+            JSONObject postBody = new JSONObject(JsonUtil.serialize(new Credentials(username, password)));
+            return postBody;
+
+        }catch (JSONException e){
+            Log.e("Exception in Service", "Error serializing Account");
+            return null;
+        }
+    };
 
 }

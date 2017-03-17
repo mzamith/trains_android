@@ -1,4 +1,4 @@
-package trains.feup.org.trains.util;
+package trains.feup.org.trains.api;
 
 /**
  * Created by mzamith on 15/03/17.

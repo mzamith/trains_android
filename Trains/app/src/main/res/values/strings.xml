@@ -6,6 +6,7 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_confirm_password">Password</string>
     <string name="action_login">Login</string>
+    <string name="action_logout">Logout</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_login_register"><u>Do not have a login? Please Register</u></string>
     <string name="action_sign_in_short">Sign in</string>
@@ -16,10 +17,12 @@
 
     <string name="error_password_match">Password and Confirm Password do not match</string>
     <string name="error_conflict">Ups, That username is already taken</string>
-    <string name="error_server">There was an error while registering</string>
+    <string name="error_server">Internal Server Error</string>
+    <string name="error_unauthorized">Invalid username or passoword</string>
 
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="saved_token">Token</string>
     <string name="title_activity_register">Register</string>
 </resources>

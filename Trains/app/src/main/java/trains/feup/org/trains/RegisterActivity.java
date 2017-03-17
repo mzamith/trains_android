@@ -3,7 +3,10 @@ package trains.feup.org.trains;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +35,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -40,6 +44,7 @@ import java.util.List;
 
 import trains.feup.org.trains.api.ServerCallback;
 import trains.feup.org.trains.service.UserService;
+import trains.feup.org.trains.util.ProgressHandler;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -48,10 +53,6 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class RegisterActivity extends AppCompatActivity {
 
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
@@ -59,6 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
     private View mProgressView;
     private View mRegisterFormView;
     private TextView mError;
+
+    private ProgressHandler progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         mRegisterFormView = findViewById(R.id.register_form);
         mProgressView = findViewById(R.id.register_progress);
+
+        progress = new ProgressHandler(mProgressView, mRegisterFormView, this);
     }
 
     /**
@@ -147,31 +152,37 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            progress.showProgress();
 
             UserService service = new UserService();
             JsonObjectRequest registerRequest = service.register(getApplicationContext(), email, password, new ServerCallback() {
                 @Override
                 public void OnSuccess(JSONObject result) {
+
                     mError.setText("");
+
                     Log.i("Result", result.toString());
-                    showProgress(false);
+
+                    tryLogin();
+
+                    progress.hideProgress();
                 }
 
                 @Override
-                public void OnError (String errorCode){
+                public void OnError (int errorCode){
 
-                    if (errorCode.equals(ServerCallback.CONFLICT)) {
+                    if (errorCode == ServerCallback.CONFLICT) {
                         mError.setText(R.string.error_conflict);
+                    } else{
+                        mError.setText(R.string.error_server);
                     }
 
-                    showProgress(false);
+                    progress.hideProgress();
                 }
             });
 
         }
     }
-
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -183,40 +194,50 @@ public class RegisterActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
-    /**
-     * Shows the progress UI and hides the form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+    private void tryLogin(){
 
-            mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mRegisterFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        UserService service = new UserService();
+        service.login(this, mEmailView.getText().toString(), mPasswordView.getText().toString(), new ServerCallback() {
+            @Override
+            public void OnSuccess(JSONObject result) {
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                mEmailView.setText("");
+                mPasswordView.setText("");
+
+                try {
+                    String token = result.getJSONObject("headers").getString("Authorization").substring(7);
+                    saveToken(token);
+                    startMainActivity();
+
+                } catch (JSONException je){
+                    Log.e("TOKEN ERROR", je.toString());
                 }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+
+            }
+
+            @Override
+            public void OnError(int errorCode) {
+
+                mError.setText("something");
+
+            }
+        });
     }
+
+    private void saveToken(String token){
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(getString(R.string.saved_token), token);
+        editor.commit();
+
+    }
+
+    private void startMainActivity(){
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 
 }
