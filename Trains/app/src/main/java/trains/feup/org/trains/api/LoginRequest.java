@@ -15,6 +15,8 @@ import java.io.UnsupportedEncodingException;
  * Created by mzamith on 17/03/17.
  */
 
+//Workaround to get the auth header out of the request.
+
 public class LoginRequest extends JsonObjectRequest {
 
 
@@ -31,14 +33,12 @@ public class LoginRequest extends JsonObjectRequest {
     @Override
     protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
         try {
-            String jsonString = new String(response.data,
-                    HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+            //String jsonString = new String(response.data,
+              //      HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
             JSONObject jsonResponse = new JSONObject();
             jsonResponse.put("headers", new JSONObject(response.headers));
             return Response.success(jsonResponse,
                     HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
-            return Response.error(new ParseError(e));
         } catch (JSONException je) {
             return Response.error(new ParseError(je));
         }

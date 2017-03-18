@@ -28,8 +28,6 @@ import java.util.Map;
 
 public class ApiInvoker {
 
-    SharedPreferences preferences;
-
     public static JsonObjectRequest post(String url, JSONObject body, final String token, final ServerCallback callback) {
 
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, body,
@@ -53,6 +51,10 @@ public class ApiInvoker {
 
                                callback.OnError(response.statusCode);
 
+
+                                //This is just for debbuging.
+                                //I was having trouble trying to figure out ServerError
+
                                 String res = new String(response.data,
                                         HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                                 // Now you can use any deserializer to make sense of data
@@ -66,6 +68,8 @@ public class ApiInvoker {
                                 // returned data is not JSONObject?
                                 e2.printStackTrace();
                             }
+                        }else{
+                            callback.OnError(response.statusCode);
                         }
                     }
                 }

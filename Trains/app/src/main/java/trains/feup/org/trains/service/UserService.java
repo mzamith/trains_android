@@ -2,26 +2,15 @@ package trains.feup.org.trains.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
+import trains.feup.org.trains.R;
+import trains.feup.org.trains.TrainsApp;
 import trains.feup.org.trains.api.ApiInvoker;
 import trains.feup.org.trains.api.ServerCallback;
 import trains.feup.org.trains.model.Account;
@@ -35,20 +24,27 @@ import trains.feup.org.trains.util.JsonUtil;
 
 public class UserService {
 
-    SharedPreferences sharedPreferences;
+    SharedPreferences preferences;
+    String token;
+
+    public UserService() {
+        Context context = TrainsApp.getContext();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context) ;
+        token = preferences.getString(context.getString(R.string.saved_token), "");
+    }
 
     public JsonObjectRequest register(Context context, String username, String password, final ServerCallback callback) {
 
         String url = ApiEndpoint.getEndpoint() + "register";
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        JSONObject postBody = this.buildAccount(username, password);
+        JSONObject postBody = buildAccount(username, password);
 
         JsonObjectRequest postRequest = ApiInvoker.post(url, postBody, null, callback);
 
         queue.add(postRequest);
         return postRequest;
-    };
+    }
 
     public void login(Context context, String username, String password, final ServerCallback callback){
 
@@ -71,7 +67,7 @@ public class UserService {
             Log.e("Exception in Service", "Error serializing Account");
             return null;
         }
-    };
+    }
 
     private JSONObject buildCredentials(String username, String password){
         try{
@@ -79,9 +75,9 @@ public class UserService {
             return postBody;
 
         }catch (JSONException e){
-            Log.e("Exception in Service", "Error serializing Account");
+            Log.e("Exception in Service", "Error serializing Credentials");
             return null;
         }
-    };
+    }
 
 }
