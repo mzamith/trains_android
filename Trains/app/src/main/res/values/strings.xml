@@ -4,17 +4,23 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="prompt_confirm_password">Password</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
+    <string name="prompt_creditcard">Credit Card Number</string>
+    <string name="prompt_creditcard_date">Credit Card Date</string>
+
     <string name="action_login">Login</string>
     <string name="action_logout">Logout</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_login_register"><u>Do not have a login? Please Register</u></string>
     <string name="action_sign_in_short">Sign in</string>
+
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-
+    <string name="error_invalid_card">Card number must be 16 digits</string>
+    <string name="error_invalid_card_date">Invalid Date</string>
+    <string name="error_expired_card">This card already expired</string>
     <string name="error_password_match">Password and Confirm Password do not match</string>
     <string name="error_conflict">Ups, That username is already taken</string>
     <string name="error_server">Internal Server Error</string>

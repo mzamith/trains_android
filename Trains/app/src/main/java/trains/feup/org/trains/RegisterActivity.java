@@ -1,35 +1,21 @@
 package trains.feup.org.trains;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -37,16 +23,16 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import trains.feup.org.trains.api.ServerCallback;
 import trains.feup.org.trains.service.UserService;
 import trains.feup.org.trains.util.ProgressHandler;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -54,9 +40,16 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class RegisterActivity extends AppCompatActivity {
 
     // UI references.
+
+    //private DatePicker datePicker;
+    private final int DATE_PICKER_ID = 999;
+
     private EditText mEmailView;
     private EditText mPasswordView;
     private EditText mConfirmPasswordView;
+    private EditText mCreditCardNumber;
+    private EditText mCreditCardDate;
+
     private View mProgressView;
     private View mRegisterFormView;
     private TextView mError;
@@ -74,6 +67,20 @@ public class RegisterActivity extends AppCompatActivity {
         mError = (TextView) findViewById(R.id.error_text);
         mPasswordView = (EditText) findViewById(R.id.password);
         mConfirmPasswordView = (EditText) findViewById(R.id.confirmpassword);
+        mCreditCardNumber = (EditText) findViewById(R.id.creditcard);
+        mCreditCardDate = (EditText) findViewById(R.id.creditcarddate);
+        //datePicker = (DatePicker) findViewById(R.id.cardDate);
+
+        mCreditCardDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    showDialog(DATE_PICKER_ID);
+                } else {
+
+                }
+            }
+        });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -115,6 +122,10 @@ public class RegisterActivity extends AppCompatActivity {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         String confirmPassword = mConfirmPasswordView.getText().toString();
+        String cardNumber = mCreditCardNumber.getText().toString();
+        String cardDate = mCreditCardDate.getText().toString();
+
+        Date formattedDate = getValidCardDate(cardDate);
 
         boolean cancel = false;
         View focusView = null;
@@ -125,7 +136,6 @@ public class RegisterActivity extends AppCompatActivity {
             focusView = mPasswordView;
             cancel = true;
         }
-
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
@@ -143,6 +153,28 @@ public class RegisterActivity extends AppCompatActivity {
             mPasswordView.setError(getString(R.string.error_password_match));
             focusView = mPasswordView;
             cancel = true;
+        /*} else if (TextUtils.isEmpty(cardNumber)){
+            mCreditCardNumber.setError(getString(R.string.error_field_required));
+            focusView = mCreditCardNumber;
+            cancel = true;
+        } else if (TextUtils.isEmpty(cardDate)){
+            mCreditCardDate.setError(getString(R.string.error_field_required));
+            focusView = mCreditCardDate;
+            cancel = true;*/
+        } else if (!isCardValid(cardNumber)){
+            mCreditCardNumber.setError(getString(R.string.error_invalid_card));
+            focusView = mCreditCardNumber;
+            cancel = true;
+        } else if (formattedDate == null){
+            mCreditCardDate.setError(getString(R.string.error_invalid_card_date));
+            focusView = mCreditCardDate;
+            this.dismissDialog(DATE_PICKER_ID);
+            cancel = true;
+        } else if (formattedDate.before(new Date())){
+            mCreditCardDate.setError(getString(R.string.error_expired_card));
+            focusView = mCreditCardDate;
+            this.dismissDialog(DATE_PICKER_ID);
+            cancel = true;
         }
 
         if (cancel) {
@@ -155,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
             progress.showProgress();
 
             UserService service = new UserService();
-            JsonObjectRequest registerRequest = service.register(getApplicationContext(), email, password, new ServerCallback() {
+            JsonObjectRequest registerRequest = service.register(getApplicationContext(), email, password, cardNumber, formattedDate, new ServerCallback() {
                 @Override
                 public void OnSuccess(JSONObject result) {
 
@@ -194,6 +226,24 @@ public class RegisterActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
+    private boolean isCardValid(String cardNumber) {
+
+        return cardNumber.length() == 16;
+    }
+
+    private Date getValidCardDate(String date){
+
+        try{
+            DateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date formatedDate = dateFormatter.parse(date);
+
+            return formatedDate;
+
+        } catch (ParseException pe){
+            return null;
+        }
+    }
+
     private void tryLogin(){
 
         UserService service = new UserService();
@@ -218,6 +268,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void OnError(int errorCode) {
 
+                //TODO this is silly, i was lazy
                 mError.setText("something");
 
             }
@@ -238,6 +289,36 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_PICKER_ID:
+                // set date picker as current date
+
+                final Calendar c = Calendar.getInstance();
+
+                return new DatePickerDialog(this, datePickerListener,
+                        c.get(Calendar.YEAR), c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            // set selected date into textview
+            mCreditCardDate.setText(new StringBuilder().append(selectedDay)
+                    .append("/").append(selectedMonth + 1).append("/").append(selectedYear));
+
+
+        }
+    };
+
 
 
 }

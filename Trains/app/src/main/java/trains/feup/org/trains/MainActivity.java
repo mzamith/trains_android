@@ -15,7 +15,6 @@ import android.widget.Toast;
 public class MainActivity extends DrawerActivity {
 
     private TextView mText;
-    private Button mLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,25 +26,9 @@ public class MainActivity extends DrawerActivity {
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         drawer.addView(contentView, 0);
 
-
         mText = (TextView) findViewById(R.id.text);
-        mLogout = (Button) findViewById(R.id.logout);
-
-        mLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                sharedPreferences.edit().remove(getString(R.string.saved_token)).commit();
-
-                Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
-                startActivity(intent);
-            }
-        });
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String  data = sharedPreferences.getString(getString(R.string.saved_token), "") ;
-        Toast.makeText(this,data, Toast.LENGTH_LONG).show();
-
         mText.setText(sharedPreferences.getString(getString(R.string.saved_token), ""));
 
     }

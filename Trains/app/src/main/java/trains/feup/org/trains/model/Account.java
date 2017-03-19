@@ -1,40 +1,58 @@
+
 package trains.feup.org.trains.model;
 
-/**
- * Created by mzamith on 10/03/17.
- */
+import java.util.Date;
+import java.util.Set;
+import trains.feup.org.trains.model.Role;
 
-public class Account {
+import trains.feup.org.trains.model.TransactionalEntity;
+
+/**
+ * The Account class is an entity model object. An Account describes the
+ * security credentials and authentication flags that permit access to
+ * application functionality.
+ * 
+ * @author Manuel Zamith
+ */
+public class Account extends TransactionalEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public Account() {}
+
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Account(String username, String password, String cardNumber, Date cardDate) {
+        this.username = username;
+        this.password = password;
+        this.cardNumber = cardNumber;
+        this.cardDate = cardDate;
+    }
 
     /**
      * The primary key identifier.
      */
 
-    public Account() {
-    }
-
-    public Account (String username, String password){
-        this.password = password;
-        this.username = username;
-    }
-
-    private Long id;
     private String username;
+
     private String password;
+
     private boolean enabled = true;
+
     private boolean credentialsexpired = false;
+
     private boolean expired = false;
+
     private boolean locked = false;
 
-    public Long getId() {
-        return id;
-    }
+    private String cardNumber;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Date cardDate;
+
+    private Set<Role> roles;
 
     public String getUsername() {
         return username;
@@ -84,12 +102,28 @@ public class Account {
         this.locked = locked;
     }
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", id=" + id +
-                '}';
+    public String getCardNumber() {
+        return cardNumber;
     }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public Date getCardDate() {
+        return cardDate;
+    }
+
+    public void setCardDate(Date cardDate) {
+        this.cardDate = cardDate;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
 }
