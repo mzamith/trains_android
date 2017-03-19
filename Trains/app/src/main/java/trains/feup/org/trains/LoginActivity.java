@@ -215,6 +215,7 @@ public class LoginActivity extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(getString(R.string.saved_token), token);
+        editor.putString(getString(R.string.saved_username), mEmailView.getText().toString());
         editor.commit();
 
     }

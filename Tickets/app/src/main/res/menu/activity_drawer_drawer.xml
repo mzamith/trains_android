@@ -4,16 +4,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search_black_24dp"
-            android:title="Search Trips" />
+            android:icon="@drawable/ic_file_download_black_24dp"
+            android:title="Download Tickets" />
         <item
             android:id="@+id/nav_wallet"
-            android:icon="@drawable/ic_shopping_cart_black_24dp"
-            android:title="Wallet" />
+            android:icon="@drawable/ic_perm_device_information_black_24dp"
+            android:title="Validate Tickets" />
         <item
             android:id="@+id/nav_timetable"
-            android:icon="@drawable/ic_access_time_black_24px"
-            android:title="Timetable" />
+            android:icon="@drawable/ic_trending_down_black_24dp"
+            android:title="Statistics" />
    <!--     <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
@@ -24,7 +24,7 @@
         <menu>
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_highlight_off_black_24dp"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
                 android:title="Logout" />
         </menu>
     </item>

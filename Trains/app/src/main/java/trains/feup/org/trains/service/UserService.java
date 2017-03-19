@@ -75,6 +75,7 @@ public class UserService extends Service{
     public void logout(){
 
         preferences.edit().remove(context.getString(R.string.saved_token)).commit();
+        preferences.edit().remove(context.getString(R.string.saved_username)).commit();
 
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);

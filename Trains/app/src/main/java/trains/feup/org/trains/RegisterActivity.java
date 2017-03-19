@@ -280,6 +280,7 @@ public class RegisterActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(getString(R.string.saved_token), token);
+        editor.putString(getString(R.string.saved_username), token);
         editor.commit();
 
     }

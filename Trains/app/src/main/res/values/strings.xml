@@ -30,6 +30,8 @@
         completions."
     </string>
     <string name="saved_token">Token</string>
+    <string name="saved_username">TrainsUsername</string>
+
     <string name="title_activity_register">Register</string>
     <string name="title_activity_drawer">DrawerActivity</string>
 
