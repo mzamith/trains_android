@@ -1,12 +1,13 @@
 package trains.feup.org.trains.api;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * Created by mzamith on 15/03/17.
  */
 
-public interface ServerCallback {
+public interface ServerObjectCallback {
 
     public static int OK = 200;
     public static int UNAUTHORIZED = 401;

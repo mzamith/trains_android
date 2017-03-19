@@ -18,7 +18,7 @@ import trains.feup.org.trains.LoginActivity;
 import trains.feup.org.trains.R;
 import trains.feup.org.trains.TrainsApp;
 import trains.feup.org.trains.api.ApiInvoker;
-import trains.feup.org.trains.api.ServerCallback;
+import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.model.Account;
 import trains.feup.org.trains.api.ApiEndpoint;
 import trains.feup.org.trains.model.Credentials;
@@ -34,7 +34,7 @@ public class UserService extends Service{
         super();
     }
 
-    public JsonObjectRequest register(Context context, String username, String password, final ServerCallback callback) {
+    public JsonObjectRequest register(Context context, String username, String password, final ServerObjectCallback callback) {
 
         String url = ApiEndpoint.getEndpoint() + "register";
 
@@ -47,7 +47,7 @@ public class UserService extends Service{
         return postRequest;
     }
 
-    public JsonObjectRequest register(Context context, String username, String password, String cardNumber, Date cardDate, final ServerCallback callback) {
+    public JsonObjectRequest register(Context context, String username, String password, String cardNumber, Date cardDate, final ServerObjectCallback callback) {
 
         String url = ApiEndpoint.getEndpoint() + "register";
 
@@ -60,7 +60,7 @@ public class UserService extends Service{
         return postRequest;
     }
 
-    public void login(Context context, String username, String password, final ServerCallback callback){
+    public void login(Context context, String username, String password, final ServerObjectCallback callback){
 
         RequestQueue queue = Volley.newRequestQueue(context);
 

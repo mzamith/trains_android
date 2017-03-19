@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import trains.feup.org.trains.api.ServerCallback;
+import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.service.UserService;
 import trains.feup.org.trains.util.ProgressHandler;
 
@@ -187,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
             progress.showProgress();
 
             UserService service = new UserService();
-            JsonObjectRequest registerRequest = service.register(getApplicationContext(), email, password, cardNumber, formattedDate, new ServerCallback() {
+            JsonObjectRequest registerRequest = service.register(getApplicationContext(), email, password, cardNumber, formattedDate, new ServerObjectCallback() {
                 @Override
                 public void OnSuccess(JSONObject result) {
 
@@ -203,7 +203,7 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void OnError (int errorCode){
 
-                    if (errorCode == ServerCallback.CONFLICT) {
+                    if (errorCode == ServerObjectCallback.CONFLICT) {
                         mError.setText(R.string.error_conflict);
                     } else{
                         mError.setText(R.string.error_server);
@@ -247,7 +247,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void tryLogin(){
 
         UserService service = new UserService();
-        service.login(this, mEmailView.getText().toString(), mPasswordView.getText().toString(), new ServerCallback() {
+        service.login(this, mEmailView.getText().toString(), mPasswordView.getText().toString(), new ServerObjectCallback() {
             @Override
             public void OnSuccess(JSONObject result) {
 

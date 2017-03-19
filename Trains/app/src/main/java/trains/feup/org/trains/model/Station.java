@@ -14,7 +14,11 @@ package trains.feup.org.trains.model;
 public class Station extends ReferenceEntity {
 
     public Station() {
-	super();
+	    super();
     }
 
+    @Override
+    public String toString() {
+        return this.getCode();
+    }
 }

@@ -11,10 +11,13 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,7 +31,7 @@ import java.util.Map;
 
 public class ApiInvoker {
 
-    public static JsonObjectRequest post(String url, JSONObject body, final String token, final ServerCallback callback) {
+    public static JsonObjectRequest post(String url, JSONObject body, final String token, final ServerObjectCallback callback) {
 
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, body,
                 new Response.Listener<JSONObject>() {
@@ -96,7 +99,76 @@ public class ApiInvoker {
         return postRequest;
     };
 
-    public static JsonObjectRequest login(JSONObject body, final ServerCallback callback){
+    public static JsonArrayRequest getList(String url, final String token, final ServerListCallback callback) {
+
+        JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, (JSONArray) null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            callback.OnSuccess(response);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse response = error.networkResponse;
+                        if (error instanceof ServerError && response != null) {
+                            try {
+
+                                callback.OnError(response.statusCode);
+
+
+                                //This is just for debbuging.
+                                //I was having trouble trying to figure out ServerError
+
+                                String res = new String(response.data,
+                                        HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                // Now you can use any deserializer to make sense of data
+                                JSONObject obj = new JSONObject(res);
+
+
+                            } catch (UnsupportedEncodingException e1) {
+                                // Couldn't properly decode data to string
+                                e1.printStackTrace();
+                            } catch (JSONException e2) {
+                                // returned data is not JSONObject?
+                                e2.printStackTrace();
+                            }
+                        }else{
+                            callback.OnError(response.statusCode);
+                        }
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                // the POST parameters:
+                //params.put("site", "code");
+                //params.put("network", "tutsplus");
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json; charset=utf-8");
+
+                if (token != null) params.put("Authorization", token);
+
+                return params;
+            }
+        };
+
+        return getRequest;
+    }
+
+    public static JsonObjectRequest login(JSONObject body, final ServerObjectCallback callback){
 
         String url = ApiEndpoint.getEndpoint() + "login";
 

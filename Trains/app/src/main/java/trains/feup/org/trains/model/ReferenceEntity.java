@@ -43,18 +43,18 @@ public class ReferenceEntity implements Serializable  {
      * The timestamp at which the entity's values may be applied or used by the
      * system.
      */
-    private Date effectiveAt;
+    private String effectiveAt;
 
     /**
      * The timestamp at which the entity's values cease to be used by the
      * system. If <code>null</code> the entity is not expired.
      */
-    private Date expiresAt;
+    private String expiresAt;
 
     /**
      * The timestamp when this entity instance was created.
      */
-    private Date createdAt;
+    private String createdAt;
 
     public Long getId() {
         return id;
@@ -88,27 +88,27 @@ public class ReferenceEntity implements Serializable  {
         this.ordinal = ordinal;
     }
 
-    public Date getEffectiveAt() {
+    public String getEffectiveAt() {
         return effectiveAt;
     }
 
-    public void setEffectiveAt(Date effectiveAt) {
+    public void setEffectiveAt(String effectiveAt) {
         this.effectiveAt = effectiveAt;
     }
 
-    public Date getExpiresAt() {
+    public String getExpiresAt() {
         return expiresAt;
     }
 
-    public void setExpiresAt(Date expiresAt) {
+    public void setExpiresAt(String expiresAt) {
         this.expiresAt = expiresAt;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
