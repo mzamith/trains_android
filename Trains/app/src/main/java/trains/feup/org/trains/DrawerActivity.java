@@ -1,6 +1,7 @@
 package trains.feup.org.trains;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -80,7 +81,10 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_search) {
-            // Handle the action
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_wallet) {
 
         } else if (id == R.id.nav_timetable) {

@@ -2,6 +2,9 @@
 package trains.feup.org.trains.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -13,6 +16,8 @@ import java.util.Date;
  * @author Manuel Zamith
  */
 public class ReferenceEntity implements Serializable  {
+
+    private DateFormat dateFormat = new SimpleDateFormat();
 
     /**
      * The default serial version UID.
@@ -110,6 +115,21 @@ public class ReferenceEntity implements Serializable  {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Date getExpiresAtDate(){
+
+        return new Date(Long.parseLong(expiresAt));
+    }
+
+    public Date getCreatedAtDate(){
+
+        return new Date(Long.parseLong(createdAt));
+    }
+
+    public Date getEffectiveAtDate(){
+
+        return new Date(Long.parseLong(effectiveAt));
     }
 
 

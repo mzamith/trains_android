@@ -19,6 +19,6 @@ public class Station extends ReferenceEntity {
 
     @Override
     public String toString() {
-        return this.getCode();
+        return this.getLabel();
     }
 }
