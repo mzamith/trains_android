@@ -43,4 +43,7 @@
     <string name="main_title_label">Search for a Train</string>
     <string name="main_label_departure">Departure:</string>
     <string name="main_label_arrival">Arrival:</string>
+
+
+    <string name="savedStations">Saved Stations</string>
 </resources>

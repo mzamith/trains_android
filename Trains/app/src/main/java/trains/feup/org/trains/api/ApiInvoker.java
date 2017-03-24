@@ -1,22 +1,15 @@
 package trains.feup.org.trains.api;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonArray;
 
-import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -170,7 +163,7 @@ public class ApiInvoker {
 
     public static JsonObjectRequest login(JSONObject body, final ServerObjectCallback callback){
 
-        String url = ApiEndpoint.getEndpoint() + "login";
+        String url = ApiEndpoint.getEndpoint() + "/login";
 
         LoginRequest postRequest = new LoginRequest(Request.Method.POST, url, body,
                 new Response.Listener<JSONObject>() {

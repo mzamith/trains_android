@@ -2,8 +2,6 @@ package trains.feup.org.trains.service;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -13,10 +11,8 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-import trains.feup.org.trains.DrawerActivity;
 import trains.feup.org.trains.LoginActivity;
 import trains.feup.org.trains.R;
-import trains.feup.org.trains.TrainsApp;
 import trains.feup.org.trains.api.ApiInvoker;
 import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.model.Account;
@@ -36,7 +32,7 @@ public class UserService extends Service{
 
     public JsonObjectRequest register(Context context, String username, String password, final ServerObjectCallback callback) {
 
-        String url = ApiEndpoint.getEndpoint() + "register";
+        String url = ApiEndpoint.getEndpoint() + "/register";
 
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject postBody = buildAccount(username, password);
@@ -49,7 +45,7 @@ public class UserService extends Service{
 
     public JsonObjectRequest register(Context context, String username, String password, String cardNumber, Date cardDate, final ServerObjectCallback callback) {
 
-        String url = ApiEndpoint.getEndpoint() + "register";
+        String url = ApiEndpoint.getEndpoint() + "/register";
 
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject postBody = buildAccount(username, password, cardNumber, cardDate);

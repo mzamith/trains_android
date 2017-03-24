@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import trains.feup.org.trains.api.ServerListCallback;
@@ -27,34 +28,37 @@ public class MainActivity extends DrawerActivity {
     private FloatingActionButton searchButton;
 
     private ArrayAdapter adapter;
-    private Station[] stations;
+    private ArrayList<Station> stations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) stations = (ArrayList) savedInstanceState.getSerializable(getString(R.string.savedStations));
 
-        StationService service = new StationService();
-        service.getStations(this, new ServerListCallback() {
-            @Override
-            public void OnSuccess(JSONArray result) {
-                Log.i("STATIONS", result.toString());
+        if(stations == null || stations.isEmpty()) {
 
-                Gson gson = new Gson();
-                stations = gson.fromJson(result.toString(), Station[].class);
+            StationService service = new StationService();
+            service.getStations(this, new ServerListCallback() {
+                @Override
+                public void OnSuccess(JSONArray result) {
+                    Log.i("STATIONS", result.toString());
 
-                Date date = stations[0].getCreatedAtDate();
+                    Gson gson = new Gson();
+                    Station[] stationsArray = gson.fromJson(result.toString(), Station[].class);
+                    stations = new ArrayList<>(Arrays.asList(stationsArray));
 
-                adapter.addAll(stations);
-                adapter.notifyDataSetChanged();
-            }
+                    adapter.addAll(stations);
+                    adapter.notifyDataSetChanged();
+                }
 
-            @Override
-            public void OnError(int errorCode) {
-                Log.i("STATIONS", String.valueOf(errorCode));
-            }
-        });
+                @Override
+                public void OnError(int errorCode) {
+                    Log.i("STATIONS", String.valueOf(errorCode));
+                }
+            });
+        }
 
 
         //ALWAYS DO THIS IN ACTIVITIES WITH DRAWER
@@ -72,6 +76,12 @@ public class MainActivity extends DrawerActivity {
         fromSpinner.setAdapter(adapter);
         toSpinner.setAdapter(adapter);
 
+        //if we got stations from savedInstance
+        if (stations != null){
+            adapter.addAll(stations);
+            adapter.notifyDataSetChanged();
+        }
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,5 +89,14 @@ public class MainActivity extends DrawerActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        savedInstanceState.putSerializable(getString(R.string.savedStations), stations);
     }
 }
