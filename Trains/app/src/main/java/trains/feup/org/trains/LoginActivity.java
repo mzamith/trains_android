@@ -5,12 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -35,8 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    //private UserLoginTask mAuthTask = null;
-
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
@@ -141,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         String token = result.getJSONObject("headers").getString("Authorization").substring(7);
                         saveToken(token);
-                        startMainActivity();
+                        startSearchActivity();
 
                     } catch (JSONException je){
                         Log.e("TOKEN ERROR", je.toString());
@@ -179,9 +174,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void startMainActivity(){
+    private void startSearchActivity(){
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SearchTripsActivity.class);
         startActivity(intent);
     }
 
@@ -201,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
         String  data = sharedPreferences.getString(getString(R.string.saved_token), "") ;
 
         if (data != null && !data.isEmpty()){
-            startMainActivity();
+            startSearchActivity();
         }
 
     }

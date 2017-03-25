@@ -11,7 +11,7 @@ import android.view.View;
  * Created by mzamith on 17/03/17.
  */
 
-public class ProgressHandler {
+public class    ProgressHandler {
 
     /**
      * Shows the progress UI and hides the login form.

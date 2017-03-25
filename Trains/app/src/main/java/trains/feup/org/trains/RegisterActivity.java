@@ -287,7 +287,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void startMainActivity(){
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SearchTripsActivity.class);
         startActivity(intent);
     }
 

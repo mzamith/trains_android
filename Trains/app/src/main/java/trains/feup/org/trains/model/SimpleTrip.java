@@ -1,35 +1,38 @@
-package org.feup.trains.model;
+package trains.feup.org.trains.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import trains.feup.org.trains.model.Station;
-
 public class SimpleTrip implements Serializable {
 	
-	private Date departureTime;
+	private Long departureTime;
 	private Station departureStation;
 	
-	public SimpleTripDTO(){}
+	public SimpleTrip(){}
 	
-	public SimpleTripDTO(Date departureTime, Station departureStation) {
-		super();
+	public SimpleTrip(Long departureTime, Station departureStation) {
 		this.departureTime = departureTime;
 		this.departureStation = departureStation;
 	}
-	public Date getDepartureTime() {
+
+	public Long getDepartureTime() {
 		return departureTime;
 	}
-	public void setDepartureTime(Date departureTime) {
+
+	public void setDepartureTime(Long departureTime) {
 		this.departureTime = departureTime;
 	}
+
 	public Station getDepartureStation() {
 		return departureStation;
 	}
+
 	public void setDepartureStation(Station departureStation) {
 		this.departureStation = departureStation;
 	}
-	
-	
+
+	public String getTimeString(){
+		return String.valueOf(new Date(this.departureTime).getHours()) + ":" + String.valueOf(new Date(this.departureTime).getMinutes());
+	}
 
 }

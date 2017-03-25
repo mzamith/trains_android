@@ -1,6 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/table"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/border"
+    android:paddingLeft="@dimen/activity_horizontal_items"
+    android:paddingRight="@dimen/activity_horizontal_items"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:shrinkColumns="1"
+    android:stretchColumns="1">
 
-</LinearLayout>
+    <TableRow
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:layout_width="70dp"
+            android:text="@string/main_label_departure" />
+        <TextView
+            android:layout_weight="0"
+            android:layout_width="20dp"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="70dp"
+            android:text="@string/main_label_arrival" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/departure_time"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            style="@style/TextAppearance.AppCompat.Large"/>
+        <ImageButton
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:src="@drawable/ic_arrow_forward_black_24dp" />
+        <TextView
+            android:id="@+id/arrival_time"
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            style="@style/TextAppearance.AppCompat.Large"/>
+        <ImageButton
+            android:id="@+id/btn_arrow"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+    </TableRow>
+
+    <TableRow android:layout_width="match_parent">
+        <View
+            android:layout_height="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            tools:background="@color/black"
+            android:layout_marginBottom="10dp"></View>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Train:" />
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Price:"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:text="Duration:" />
+    </TableRow>
+
+    <TableRow>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_train_black_24dp"/>
+            <TextView
+                android:id="@+id/train"
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                style="@style/TextAppearance.AppCompat.Body2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_euro_symbol_black_24dp"/>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                style="@style/TextAppearance.AppCompat.Body2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_access_time_black_24dp"/>
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                style="@style/TextAppearance.AppCompat.Body2"/>
+        </LinearLayout>
+    </TableRow>
+</TableLayout>

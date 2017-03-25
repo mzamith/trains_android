@@ -1,9 +1,10 @@
-package org.feup.trains.model;
+package trains.feup.org.trains.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Travel {
+public class Travel implements Serializable {
 	
 	private Station from;
 	private Station to;
@@ -12,15 +13,15 @@ public class Travel {
 	
 	private Train train;
 	
-	private List<SimpleTripDTO> trips;
+	private List<SimpleTrip> trips;
 	
 	private int totalDuration;
 	private int totalDistance;
 	
 	private Long price;
 	
-	private Date startTime;
-	private Date endTime;
+	private Long startTime;
+	private Long endTime;
 	
 	public Travel() {}
 	
@@ -28,65 +29,98 @@ public class Travel {
 	public Station getFrom() {
 		return from;
 	}
+
 	public void setFrom(Station from) {
 		this.from = from;
 	}
+
 	public Station getTo() {
 		return to;
 	}
+
 	public void setTo(Station to) {
 		this.to = to;
 	}
+
 	public Line getLine() {
 		return line;
 	}
+
 	public void setLine(Line line) {
 		this.line = line;
 	}
+
 	public Train getTrain() {
 		return train;
 	}
+
 	public void setTrain(Train train) {
 		this.train = train;
 	}
-	public List<SimpleTripDTO> getTrips() {
+
+	public List<SimpleTrip> getTrips() {
 		return trips;
 	}
-	public void setTrips(List<SimpleTripDTO> trips) {
+
+	public void setTrips(List<SimpleTrip> trips) {
 		this.trips = trips;
 	}
-	public int getTotalDuration() {
-		return totalDuration;
-	}
+
 	public void setTotalDuration(int totalDuration) {
 		this.totalDuration = totalDuration;
 	}
+
+	public int getTotalDuration() {
+		return totalDuration;
+	}
+
 	public int getTotalDistance() {
 		return totalDistance;
 	}
+
 	public void setTotalDistance(int totalDistance) {
 		this.totalDistance = totalDistance;
 	}
+
 	public Long getPrice() {
 		return price;
 	}
+
 	public void setPrice(Long price) {
 		this.price = price;
 	}
-	public Date getStartTime() {
+
+	public Long getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date startTime) {
+
+	public void setStartTime(Long startTime) {
 		this.startTime = startTime;
 	}
-	public Date getEndTime() {
+
+	public Long getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+
+	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
 	}
-	
-	
-	
+
+    public String getStartTimeString(){
+        return String.format("%02d", new Date(this.startTime).getHours()) + ":" + String.format("%02d", new Date(this.startTime).getMinutes());
+    }
+
+    public String getEndTimeString(){
+        return String.format("%02d", new Date(this.endTime).getHours()) + ":" + String.format("%02d", new Date(this.endTime).getMinutes());
+    }
+
+    public String getDurationString(){
+
+        double conversion = (double) this.totalDuration / 3600.0;
+        int hours = (int) conversion;
+        int minutes = (int) ( (conversion - (double) hours) * 60.0);
+
+        return String.valueOf((int)hours) + "h" + String.valueOf((int)minutes) + "min";
+    }
 
 }
