@@ -1,12 +1,10 @@
 package trains.feup.org.tickets.api;
 
-import org.json.JSONObject;
-
 /**
  * Created by mzamith on 15/03/17.
  */
 
-public interface ServerCallback {
+public interface ServerCallback<T> {
 
     public static int OK = 200;
     public static int UNAUTHORIZED = 401;
@@ -16,7 +14,7 @@ public interface ServerCallback {
     public static int CONFLICT = 409;
     public static int INTERNAL_SERVER_ERROR = 500;
 
-    void OnSuccess(JSONObject result);
+    void OnSuccess(T result);
 
-    void OnError (int errorCode);
+    void OnError(int errorCode);
 }

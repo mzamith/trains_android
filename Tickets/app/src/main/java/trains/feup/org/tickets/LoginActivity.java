@@ -68,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -118,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             UserService service = new UserService();
             final JSONObject[] jsonObject = new JSONObject[1];
 
-            service.login(getApplicationContext(), email, password, new ServerCallback() {
+            service.login(getApplicationContext(), email, password, new ServerCallback<JSONObject>() {
                 @Override
                 public void OnSuccess(JSONObject result) {
                     Log.i("Result", result.toString());
@@ -128,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                         saveToken(token);
                         startMainActivity();
 
-                    } catch (JSONException je){
+                    } catch (JSONException je) {
                         Log.e("TOKEN ERROR", je.toString());
                     }
 
@@ -158,13 +157,13 @@ public class LoginActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
-    private void startMainActivity(){
+    private void startMainActivity() {
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    private void saveToken(String token){
+    private void saveToken(String token) {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
@@ -173,21 +172,21 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void checkLoginStatus(){
+    private void checkLoginStatus() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String  data = sharedPreferences.getString(getString(R.string.saved_token), "") ;
+        String data = sharedPreferences.getString(getString(R.string.saved_token), "");
 
-        if (data != null && !data.isEmpty()){
+        if (data != null && !data.isEmpty()) {
             startMainActivity();
         }
 
     }
 
-    private void handleError(int error){
-        if (error == ServerCallback.UNAUTHORIZED){
+    private void handleError(int error) {
+        if (error == ServerCallback.UNAUTHORIZED) {
             mError.setText(getString(R.string.error_unauthorized));
-        }else {
+        } else {
             mError.setText(getString(R.string.error_server));
         }
     }
