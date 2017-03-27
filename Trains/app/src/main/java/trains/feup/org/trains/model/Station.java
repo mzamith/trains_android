@@ -6,6 +6,8 @@
 package trains.feup.org.trains.model;
 
 
+import java.io.Serializable;
+
 /**
  * The Station class is an entity model object. It represents a train stop.
  *

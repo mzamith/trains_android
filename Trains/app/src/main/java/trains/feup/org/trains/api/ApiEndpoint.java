@@ -6,8 +6,8 @@ package trains.feup.org.trains.api;
 
 public class ApiEndpoint {
 
-    //Add more revelant endpoints;
-    private final static String LOCALHOST = "http://10.0.2.2:8080/";
+    //Add more relevant endpoints;
+    private final static String LOCALHOST = "http://10.0.2.2:8080";
     private final static String PRODUCTION = "whatever";
 
     public static String getEndpoint(){

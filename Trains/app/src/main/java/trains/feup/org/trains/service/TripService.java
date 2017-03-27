@@ -11,18 +11,18 @@ import trains.feup.org.trains.api.ApiInvoker;
 import trains.feup.org.trains.api.ServerListCallback;
 
 /**
- * Created by mzamith on 19/03/17.
+ * Created by mzamith on 24/03/17.
  */
 
-public class StationService extends Service {
+public class TripService extends Service {
 
-    public StationService() {
+    public TripService(){
         super();
     }
 
-    public JsonArrayRequest getStations(Context context, final ServerListCallback callback) {
+    public JsonArrayRequest getTravels(Context context, long originIndex, long destinationIndex, final ServerListCallback callback) {
 
-        String url = ApiEndpoint.getEndpoint() + "/api/stations";
+        String url = String.format(ApiEndpoint.getEndpoint() + "/api/travels?origin=%1$d&destination=%2$d", originIndex, destinationIndex);
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
