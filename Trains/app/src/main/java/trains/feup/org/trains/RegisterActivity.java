@@ -32,9 +32,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.service.UserService;
+import trains.feup.org.trains.util.KeyboardHandler;
 import trains.feup.org.trains.util.ProgressHandler;
 
 /**
@@ -97,6 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.register_progress);
 
         progress = new ProgressHandler(mProgressView, mRegisterFormView, this);
+        KeyboardHandler.hideKeyboard(this);
 
 
     }
@@ -166,20 +170,22 @@ public class RegisterActivity extends AppCompatActivity {
             mCreditCardDate.setError(getString(R.string.error_field_required));
             focusView = mCreditCardDate;
             cancel = true;*/
-        } else if (!isCardValid(cardNumber)){
+        /*} else if (!isCardValid(cardNumber)){
             mCreditCardNumber.setError(getString(R.string.error_invalid_card));
             focusView = mCreditCardNumber;
-            cancel = true;
-        } else if (formattedDate == null){
+            cancel = true;*/
+        } else if (formattedDate == null && !cardDate.isEmpty()){
             mCreditCardDate.setError(getString(R.string.error_invalid_card_date));
             focusView = mCreditCardDate;
-            this.dismissDialog(DATE_PICKER_ID);
+
+            this.removeDialog(DATE_PICKER_ID);
+
             cancel = true;
-        } else if (formattedDate.before(new Date())){
+      /*  } else if (formattedDate.before(new Date())){
             mCreditCardDate.setError(getString(R.string.error_expired_card));
             focusView = mCreditCardDate;
             this.dismissDialog(DATE_PICKER_ID);
-            cancel = true;
+            cancel = true;*/
         }
 
         if (cancel) {
@@ -222,31 +228,30 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+
+        Pattern pattern = Pattern.compile("^.+@.+\\..+$");
+        return pattern.matcher(email).find();
+
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+
+        Pattern pattern = Pattern.compile("(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,}");
+        return pattern.matcher(password).find();
+
     }
 
-    private boolean isCardValid(String cardNumber) {
-
-        return cardNumber.length() == 16;
-    }
 
     private Date getValidCardDate(String date){
 
         try{
             DateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date formatedDate = dateFormatter.parse(date);
-
-            return formatedDate;
+            return dateFormatter.parse(date);
 
         } catch (ParseException pe){
             return null;
         }
+
     }
 
     private void tryLogin(){
