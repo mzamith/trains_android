@@ -17,6 +17,7 @@
         android:name="trains.feup.org.tickets.TicketsApp">
         <activity
             android:name="trains.feup.org.tickets.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
