@@ -13,9 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/toolbar_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:src="@drawable/trains_logo_inverse"/>
+
         <LinearLayout
             android:layout_gravity="start|center_vertical"
-            android:paddingLeft="20dp"
+            android:paddingLeft="40dp"
             android:paddingRight="20dp"
             android:gravity="center"
             android:layout_width="match_parent"

@@ -12,9 +12,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import trains.feup.org.trains.service.UserService;
+import trains.feup.org.trains.util.KeyboardHandler;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,10 +31,17 @@ public class DrawerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+
+        {
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                KeyboardHandler.hideKeyboard(DrawerActivity.this);
+            }
+        };
+
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -85,10 +94,15 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_timetable) {
 
-        } else if (id == R.id.nav_logout){
+        } else if (id == R.id.nav_logout) {
 
             UserService service = new UserService();
             service.logout();
+
+        } else if (id == R.id.nav_card) {
+
+            Intent intent = new Intent(this, PaymentInfoActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -96,9 +110,9 @@ public class DrawerActivity extends AppCompatActivity
         return true;
     }
 
-    private String getUsernameFromPreferences(){
+    private String getUsernameFromPreferences() {
         Context context = TrainsApp.getContext();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context) ;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString(context.getString(R.string.saved_username), "");
     }
 }

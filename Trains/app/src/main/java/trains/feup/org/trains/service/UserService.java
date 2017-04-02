@@ -18,6 +18,7 @@ import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.model.Account;
 import trains.feup.org.trains.api.ApiEndpoint;
 import trains.feup.org.trains.model.Credentials;
+import trains.feup.org.trains.model.SimpleAccount;
 import trains.feup.org.trains.util.JsonUtil;
 
 /**
@@ -28,19 +29,6 @@ public class UserService extends Service{
 
     public UserService() {
         super();
-    }
-
-    public JsonObjectRequest register(Context context, String username, String password, final ServerObjectCallback callback) {
-
-        String url = ApiEndpoint.getEndpoint() + "/register";
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-        JSONObject postBody = buildAccount(username, password);
-
-        JsonObjectRequest postRequest = ApiInvoker.post(url, postBody, null, callback);
-
-        queue.add(postRequest);
-        return postRequest;
     }
 
     public JsonObjectRequest register(Context context, String username, String password, String cardNumber, Date cardDate, final ServerObjectCallback callback) {
@@ -77,9 +65,46 @@ public class UserService extends Service{
         context.startActivity(intent);
     }
 
-    private JSONObject buildAccount(String username, String password){
+    public void logoutWithExtra(int extra){
+
+        preferences.edit().remove(context.getString(R.string.saved_token)).commit();
+        preferences.edit().remove(context.getString(R.string.saved_username)).commit();
+
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.putExtra(context.getString(R.string.error_connection), extra);
+        context.startActivity(intent);
+    }
+
+    public JsonObjectRequest getProfile(Context context, final ServerObjectCallback callback) {
+
+        String url = ApiEndpoint.getEndpoint() + "/api/profile";
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        JsonObjectRequest getRequest = ApiInvoker.get(url, token, callback);
+
+        queue.add(getRequest);
+        return getRequest;
+    }
+
+    public JsonObjectRequest updateProfile(Context context, SimpleAccount account, final ServerObjectCallback callback) {
+
+        String url = ApiEndpoint.getEndpoint() + "/api/profile";
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        JSONObject putBody = buildSimpleAccount(account);
+
+        JsonObjectRequest putRequest = ApiInvoker.put(url, putBody, token, callback);
+
+        queue.add(putRequest);
+        return putRequest;
+    }
+
+
+    private JSONObject buildAccount(String username, String password, String cardNumber, Date cardDate){
         try{
-            JSONObject postBody = new JSONObject(JsonUtil.serialize(new Account(username, password)));
+            JSONObject postBody = new JSONObject(JsonUtil.serialize(new Account(username, password, cardNumber, cardDate)));
             return postBody;
 
         }catch (JSONException e){
@@ -88,9 +113,9 @@ public class UserService extends Service{
         }
     }
 
-    private JSONObject buildAccount(String username, String password, String cardNumber, Date cardDate){
+    private JSONObject buildSimpleAccount(SimpleAccount account){
         try{
-            JSONObject postBody = new JSONObject(JsonUtil.serialize(new Account(username, password, cardNumber, cardDate)));
+            JSONObject postBody = new JSONObject(JsonUtil.serialize(account));
             return postBody;
 
         }catch (JSONException e){

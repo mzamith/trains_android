@@ -25,6 +25,10 @@
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_power_settings_new_black_24dp"
                 android:title="Logout" />
+            <item
+                android:id="@+id/nav_card"
+                android:icon="@drawable/ic_credit_card_black_24dp"
+                android:title="Payment Info"/>
         </menu>
     </item>
 </menu>

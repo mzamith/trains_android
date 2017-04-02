@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -26,6 +27,7 @@ import trains.feup.org.trains.model.Station;
 import trains.feup.org.trains.model.Travel;
 import trains.feup.org.trains.service.StationService;
 import trains.feup.org.trains.service.TripService;
+import trains.feup.org.trains.service.UserService;
 import trains.feup.org.trains.util.ProgressHandler;
 
 public class SearchTripsActivity extends DrawerActivity {
@@ -68,6 +70,14 @@ public class SearchTripsActivity extends DrawerActivity {
 
                 @Override
                 public void OnError(int errorCode) {
+
+                    if (errorCode == ServerListCallback.NOT_FOUND || errorCode == ServerListCallback.UNAUTHORIZED){
+
+                        UserService service = new UserService();
+                        service.logoutWithExtra(errorCode);
+                        //Toast.makeText(SearchTripsActivity.this, "Make sure you have Wifi Connection", Toast.LENGTH_LONG).show();
+                    }
+
                     Log.i("STATIONS", String.valueOf(errorCode));
                 }
             });

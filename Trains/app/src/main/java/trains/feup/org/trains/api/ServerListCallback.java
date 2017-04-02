@@ -15,6 +15,7 @@ public interface ServerListCallback {
     public static int TIMEOUT = 408;
     public static int CONFLICT = 409;
     public static int INTERNAL_SERVER_ERROR = 500;
+    public static int PRECONDITION_FAILED = 412;
 
     void OnSuccess(JSONArray result);
 

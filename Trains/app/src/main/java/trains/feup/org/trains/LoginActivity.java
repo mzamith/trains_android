@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.json.JSONException;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         checkLoginStatus();
+        showErrorMessageToast(getIntent().getIntExtra(getString(R.string.error_connection), 0));
 
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
@@ -206,6 +208,18 @@ public class LoginActivity extends AppCompatActivity {
             mError.setText(getString(R.string.error_unauthorized));
         }else {
             mError.setText(getString(R.string.error_server));
+        }
+    }
+
+    private void showErrorMessageToast(int errorCode){
+
+        switch (errorCode){
+            case ServerObjectCallback.NOT_FOUND:
+                Toast.makeText(this, "Make sure you have Wifi Connection", Toast.LENGTH_LONG).show();
+                break;
+            case ServerObjectCallback.UNAUTHORIZED:
+                Toast.makeText(this, "Your token has expired", Toast.LENGTH_LONG).show();
+                break;
         }
     }
 

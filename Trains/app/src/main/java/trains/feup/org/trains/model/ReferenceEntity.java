@@ -17,7 +17,7 @@ import java.util.Date;
  */
 public class ReferenceEntity implements Serializable  {
 
-    private DateFormat dateFormat = new SimpleDateFormat();
+    private transient DateFormat dateFormat = new SimpleDateFormat();
 
     /**
      * The default serial version UID.

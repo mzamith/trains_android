@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +33,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="trains.feup.org.trains.LoginActivity" />
         </activity>
-
         <activity
             android:name=".SearchTripsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -40,8 +40,15 @@
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ResultsActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ResultsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BuyTicketActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PaymentInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -8,6 +8,8 @@ public class Travel implements Serializable {
 	
 	private Station from;
 	private Station to;
+
+	private Departure departure;
 	
 	private Line line;
 	
@@ -40,6 +42,14 @@ public class Travel implements Serializable {
 
 	public void setTo(Station to) {
 		this.to = to;
+	}
+
+	public Departure getDeparture() {
+		return departure;
+	}
+
+	public void setDeparture(Departure departure) {
+		this.departure = departure;
 	}
 
 	public Line getLine() {
@@ -107,10 +117,15 @@ public class Travel implements Serializable {
 	}
 
     public String getStartTimeString(){
+
+		Date date = new Date(startTime);
         return String.format("%02d", new Date(this.startTime).getHours()) + ":" + String.format("%02d", new Date(this.startTime).getMinutes());
     }
 
     public String getEndTimeString(){
+
+		Date date = new Date(endTime);
+
         return String.format("%02d", new Date(this.endTime).getHours()) + ":" + String.format("%02d", new Date(this.endTime).getMinutes());
     }
 
@@ -120,7 +135,13 @@ public class Travel implements Serializable {
         int hours = (int) conversion;
         int minutes = (int) ( (conversion - (double) hours) * 60.0);
 
-        return String.valueOf((int)hours) + "h" + String.valueOf((int)minutes) + "min";
+		if (minutes == 0){
+			return String.valueOf(hours) + "h";
+		} else if (hours == 0){
+			return String.valueOf(minutes) + "min";
+		} else {
+			return String.valueOf(hours) + "h" + String.valueOf(minutes) + "min";
+		}
     }
 
 }

@@ -28,10 +28,17 @@ public class Ticket extends ReferenceEntity {
     /**
      * Price to pay for ticket.
      */
-    private BigDecimal price;
+    private long price;
 
     public Ticket() {
-	super();
+	    super();
+    }
+
+    public Ticket(Travel travel){
+        this.departure = travel.getDeparture();
+        this.price = travel.getPrice();
+        this.to = travel.getTo();
+        this.setExpiresAt(travel.getEndTime().toString());
     }
 
     public Departure getDeparture() {
@@ -50,11 +57,11 @@ public class Ticket extends ReferenceEntity {
 	this.to = to;
     }
 
-    public BigDecimal getPrice() {
+    public long getPrice() {
 	return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(long price) {
 	this.price = price;
     }
 

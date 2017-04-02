@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_buy_ticket"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="trains.feup.org.trains.BuyTicketActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/results_toolbar" />
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="85dp"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Price:  " />
+
+                    <TextView
+                        android:id="@+id/detail_price"
+                        style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="?attr/colorPrimary"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Train:  " />
+
+                    <TextView
+                        android:id="@+id/detail_train"
+                        style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="?attr/colorPrimary"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Duration:  " />
+
+                    <TextView
+                        android:id="@+id/detail_duration"
+                        style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="?attr/colorPrimary"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/timeline_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1.90"
+                    android:gravity="center"></ListView>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_alignParentRight="true">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/buy_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_shopping_cart_black_24dp"
+                android:backgroundTint="@color/colorAccent"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

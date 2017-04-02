@@ -32,7 +32,7 @@ public class SimpleTrip implements Serializable {
 	}
 
 	public String getTimeString(){
-		return String.valueOf(new Date(this.departureTime).getHours()) + ":" + String.valueOf(new Date(this.departureTime).getMinutes());
+		return String.format("%02d", new Date(this.departureTime).getHours()) + ":" + String.format("%02d", new Date(this.departureTime).getMinutes());
 	}
 
 }

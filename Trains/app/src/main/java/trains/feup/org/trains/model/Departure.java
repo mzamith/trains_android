@@ -25,7 +25,7 @@ public class Departure extends ReferenceEntity {
     /**
      * Daily time of departure.
      */
-    private Date time;
+    private Long time;
 
     /**
      * Line the train will comply to.
@@ -46,11 +46,11 @@ public class Departure extends ReferenceEntity {
 	this.from = from;
     }
 
-    public Date getTime() {
+    public Long getTime() {
 	return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Long time) {
 	this.time = time;
     }
 

@@ -10,13 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -94,6 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.register_progress);
 
         progress = new ProgressHandler(mProgressView, mRegisterFormView, this);
+
+
     }
 
     /**
@@ -197,7 +202,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     tryLogin();
 
-                    progress.hideProgress();
+
                 }
 
                 @Override
@@ -251,7 +256,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void OnSuccess(JSONObject result) {
 
-                mEmailView.setText("");
+                //mEmailView.setText("");
                 mPasswordView.setText("");
 
                 try {
@@ -263,6 +268,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Log.e("TOKEN ERROR", je.toString());
                 }
 
+                progress.hideProgress();
+
             }
 
             @Override
@@ -270,6 +277,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //TODO this is silly, i was lazy
                 mError.setText("something");
+                progress.hideProgress();
 
             }
         });

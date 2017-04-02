@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:clickable="true"
-                    app:backgroundTint="@color/indigo_300"
+                    app:backgroundTint="@color/colorAccent"
                     app:fabSize="normal"
                     app:rippleColor="?attr/colorButtonNormal"
                     app:srcCompat="@drawable/ic_search_black_24dp" />

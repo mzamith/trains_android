@@ -29,6 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            
+            <ImageView
+                android:layout_width="@dimen/image_height"
+                android:layout_height="@dimen/app_bar_height"
+                android:src="@drawable/trains_logo"
+                android:layout_gravity="center"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
