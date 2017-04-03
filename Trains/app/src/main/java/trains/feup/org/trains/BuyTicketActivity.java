@@ -1,7 +1,9 @@
 package trains.feup.org.trains;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -69,6 +71,8 @@ public class BuyTicketActivity extends AppCompatActivity {
                     public void OnError(int errorCode) {
 
                         if (errorCode == ServerListCallback.PRECONDITION_FAILED){
+                            Vibrator v = (Vibrator) BuyTicketActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                            v.vibrate(1000);
                             showPaymentDialog();
                         }
                         Log.e("fail", "fail");

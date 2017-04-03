@@ -28,7 +28,7 @@ public class Ticket extends ReferenceEntity {
     /**
      * Price to pay for ticket.
      */
-    private long price;
+    private double price;
 
     public Ticket() {
 	    super();
@@ -57,12 +57,20 @@ public class Ticket extends ReferenceEntity {
 	this.to = to;
     }
 
-    public long getPrice() {
+    public double getPrice() {
 	return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
 	this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "departure=" + departure.getCode() +
+                ", to=" + to.getLabel() +
+                ", price=" + price +
+                '}';
+    }
 }

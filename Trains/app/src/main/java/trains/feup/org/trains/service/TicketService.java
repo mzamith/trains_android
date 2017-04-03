@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 
 import trains.feup.org.trains.api.ApiEndpoint;
 import trains.feup.org.trains.api.ApiInvoker;
+import trains.feup.org.trains.api.ServerListCallback;
 import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.model.Ticket;
 import trains.feup.org.trains.util.JsonUtil;
@@ -53,5 +55,18 @@ public class TicketService extends Service {
         }
 
         return postRequest;
+    }
+
+    public JsonArrayRequest getTickets(Context context, final ServerListCallback callback) {
+
+        String url = ApiEndpoint.getEndpoint() + "/api/usertickets";
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        JsonArrayRequest getRequest = ApiInvoker.getList(url, token, callback);
+
+        queue.add(getRequest);
+
+        return getRequest;
     }
 }

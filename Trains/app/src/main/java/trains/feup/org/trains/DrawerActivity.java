@@ -92,6 +92,9 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_wallet) {
 
+            Intent intent = new Intent(this, WalletActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_timetable) {
 
         } else if (id == R.id.nav_logout) {
