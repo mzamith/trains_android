@@ -30,6 +30,8 @@ public class Ticket extends ReferenceEntity {
      */
     private double price;
 
+    private String state;
+
     public Ticket() {
 	    super();
     }
@@ -38,7 +40,7 @@ public class Ticket extends ReferenceEntity {
         this.departure = travel.getDeparture();
         this.price = travel.getPrice();
         this.to = travel.getTo();
-        this.setExpiresAt(travel.getEndTime().toString());
+        //this.setExpiresAt(travel.getEndTime().toString());
     }
 
     public Departure getDeparture() {
@@ -63,6 +65,14 @@ public class Ticket extends ReferenceEntity {
 
     public void setPrice(double price) {
 	this.price = price;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     @Override

@@ -71,11 +71,18 @@ public class SearchTripsActivity extends DrawerActivity {
                 @Override
                 public void OnError(int errorCode) {
 
-                    if (errorCode == ServerListCallback.NOT_FOUND || errorCode == ServerListCallback.UNAUTHORIZED){
+                    UserService service = new UserService();
 
-                        UserService service = new UserService();
+                    if (errorCode == ServerListCallback.UNAUTHORIZED){
+
+
                         service.logoutWithExtra(errorCode);
                         //Toast.makeText(SearchTripsActivity.this, "Make sure you have Wifi Connection", Toast.LENGTH_LONG).show();
+                    } else if (errorCode == ServerListCallback.NOT_FOUND){
+
+                        Intent intent = new Intent(SearchTripsActivity.this, WalletActivity.class);
+                        intent.putExtra(getString(R.string.error_connection), errorCode);
+                        startActivity(intent);
                     }
 
                     Log.i("STATIONS", String.valueOf(errorCode));

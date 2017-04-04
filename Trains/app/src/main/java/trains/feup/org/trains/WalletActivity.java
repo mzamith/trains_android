@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import trains.feup.org.trains.api.ServerListCallback;
+import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.model.Ticket;
 import trains.feup.org.trains.model.Travel;
 import trains.feup.org.trains.service.TicketService;
@@ -42,6 +44,8 @@ public class WalletActivity extends DrawerActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         ticketList.setAdapter(adapter);
 
+        checkConnectionErrors();
+
         TicketService service = TicketService.getInstance();
 
         service.getTickets(this, new ServerListCallback() {
@@ -63,5 +67,16 @@ public class WalletActivity extends DrawerActivity {
             }
         });
 
+    }
+
+    private void checkConnectionErrors(){
+
+        int errorCode = getIntent().getIntExtra(getString(R.string.error_connection), 0);
+
+        switch (errorCode){
+            case ServerObjectCallback.NOT_FOUND:
+                Toast.makeText(this, "Make sure you have Wifi Connection", Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }
