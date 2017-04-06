@@ -6,6 +6,8 @@
 package trains.feup.org.trains.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
 /**
  * The Ticket class is an entity model object. It represents a ticket, with a
  * passenger capacity.
@@ -20,6 +22,8 @@ public class Ticket extends ReferenceEntity {
      */
     private Departure departure;
 
+    private Station from;
+
     /**
      * The station this ticket is allowed to go.
      */
@@ -32,6 +36,8 @@ public class Ticket extends ReferenceEntity {
 
     private String state;
 
+    private long day;
+
     public Ticket() {
 	    super();
     }
@@ -40,7 +46,8 @@ public class Ticket extends ReferenceEntity {
         this.departure = travel.getDeparture();
         this.price = travel.getPrice();
         this.to = travel.getTo();
-        //this.setExpiresAt(travel.getEndTime().toString());
+        this.from = travel.getFrom();
+        this.day = new Date().getTime();
     }
 
     public Departure getDeparture() {
@@ -73,6 +80,22 @@ public class Ticket extends ReferenceEntity {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public Station getFrom() {
+        return from;
+    }
+
+    public void setFrom(Station from) {
+        this.from = from;
+    }
+
+    public long getDay() {
+        return day;
+    }
+
+    public void setDay(long day) {
+        this.day = day;
     }
 
     @Override
