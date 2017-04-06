@@ -97,6 +97,9 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_timetable) {
 
+            Intent intent = new Intent(this, TimeTableChooseActivity.class);
+            startActivity(intent);
+
         } else if (id == R.id.nav_logout) {
 
             UserService service = new UserService();

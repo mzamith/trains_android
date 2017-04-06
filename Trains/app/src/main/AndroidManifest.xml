@@ -53,6 +53,17 @@
         <activity
             android:name=".WalletActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TimeTableChooseActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TimetableActivity"
+            android:label="@string/title_activity_schedule"
+            android:parentActivityName=".TimeTableChooseActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="trains.feup.org.trains.TimeTableChooseActivity" />
+        </activity>
     </application>
 
 </manifest>

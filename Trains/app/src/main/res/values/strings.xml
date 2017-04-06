@@ -34,6 +34,7 @@
     <string name="saved_token">Token</string>
     <string name="saved_username">TrainsUsername</string>
 
+    <string name="title_activity_schedule">Schedule</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_drawer">DrawerActivity</string>
 
@@ -45,7 +46,14 @@
     <string name="main_title_label">Search for a Train</string>
     <string name="main_label_departure">From:</string>
     <string name="main_label_arrival">To:</string>
+    <string name="detail_label_arrival">Arrival</string>
+    <string name="detail_label_departure">Departure</string>
 
+    <string name="timetable_backwards">Lisbon to Porto</string>
+    <string name="timetable_forward">Porto to Lisbon</string>
+    <string name="timetable_title">Timetables</string>
+    <string name="timetable_extra">Timetable result</string>
+    <string name="timetable_extra_way">Timetable way</string>
 
     <string name="saved_stations">Saved Stations</string>
     <string name="search_result">Trip Search Result</string>
