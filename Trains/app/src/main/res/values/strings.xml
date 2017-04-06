@@ -34,6 +34,7 @@
     <string name="saved_token">Token</string>
     <string name="saved_username">TrainsUsername</string>
 
+    <string name="title_activity_calendar">Choose a Day</string>
     <string name="title_activity_schedule">Schedule</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_drawer">DrawerActivity</string>
@@ -64,6 +65,7 @@
     <string name="activity_ticket_detail_from">deta1il</string>
     <string name="activity_ticket_detail_to">detail</string>
 
+    <string name="extra_travel">extra_travel</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"

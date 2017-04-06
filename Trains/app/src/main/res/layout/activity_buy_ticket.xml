@@ -128,7 +128,7 @@
                 android:id="@+id/buy_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_shopping_cart_black_24dp"
+                android:src="@drawable/ic_arrow_forward_black_24dp"
                 android:backgroundTint="@color/colorAccent"/>
 
         </LinearLayout>

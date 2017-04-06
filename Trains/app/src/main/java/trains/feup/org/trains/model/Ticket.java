@@ -47,7 +47,6 @@ public class Ticket extends ReferenceEntity {
         this.price = travel.getPrice();
         this.to = travel.getTo();
         this.from = travel.getFrom();
-        this.day = new Date().getTime();
     }
 
     public Departure getDeparture() {

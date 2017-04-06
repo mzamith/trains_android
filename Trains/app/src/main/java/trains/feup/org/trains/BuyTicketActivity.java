@@ -59,25 +59,9 @@ public class BuyTicketActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TicketService service = TicketService.getInstance();
-                service.buyTicket(BuyTicketActivity.this, new Ticket(travel), new ServerObjectCallback() {
-                    @Override
-                    public void OnSuccess(JSONObject result) {
-
-                        Log.i("success", "success");
-                    }
-
-                    @Override
-                    public void OnError(int errorCode) {
-
-                        if (errorCode == ServerListCallback.PRECONDITION_FAILED){
-                            Vibrator v = (Vibrator) BuyTicketActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-                            v.vibrate(1000);
-                            showPaymentDialog();
-                        }
-                        Log.e("fail", "fail");
-                    }
-                });
+                Intent intent = new Intent(BuyTicketActivity.this, ChooseDayActivity.class);
+                intent.putExtra(getString(R.string.extra_travel), travel);
+                startActivity(intent);
 
             }
         });
@@ -134,37 +118,6 @@ public class BuyTicketActivity extends AppCompatActivity {
 
     }
 
-    private void showPaymentDialog(){
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                BuyTicketActivity.this);
-
-        // set title
-        alertDialogBuilder.setTitle("Payment Failed");
-
-        // set dialog message
-        alertDialogBuilder
-                .setMessage("Oops. There seems to be a problem with your credit card information.")
-                .setCancelable(false)
-                .setPositiveButton("Update Payment Information", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(BuyTicketActivity.this, PaymentInfoActivity.class);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
-                });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
-    }
 
 }

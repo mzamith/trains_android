@@ -64,6 +64,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="trains.feup.org.trains.TimeTableChooseActivity" />
         </activity>
+        <activity
+            android:name=".ChooseDayActivity"
+            android:label="@string/title_activity_calendar"
+            android:parentActivityName=".TimetableActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="trains.feup.org.trains.TimetableActivity" />
+
+        </activity>
     </application>
 
 </manifest>
