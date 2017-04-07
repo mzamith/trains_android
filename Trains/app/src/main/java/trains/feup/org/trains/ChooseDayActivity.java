@@ -61,8 +61,8 @@ public class ChooseDayActivity extends AppCompatActivity {
                     @Override
                     public void OnSuccess(JSONObject result) {
 
-                        //TODO
-                        Toast.makeText(ChooseDayActivity.this, "SHOW TICKET DETAIL WITH QR CODE", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ChooseDayActivity.this, WalletActivity.class);
+                        startActivity(intent);
 
                         Log.i("success", "success");
                     }

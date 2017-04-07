@@ -22,7 +22,6 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -56,10 +55,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PaymentInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Payment Information"/>
         <activity
             android:name=".WalletActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Wallet"/>
         <activity
             android:name=".TimeTableChooseActivity"
             android:theme="@style/AppTheme.NoActionBar" />
