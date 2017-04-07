@@ -39,6 +39,9 @@ public class ChooseDayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_day);
 
         Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
         date = today.getTime().getTime();
 
         datePicker = (DatePicker) findViewById(R.id.date_picker);
@@ -67,10 +70,15 @@ public class ChooseDayActivity extends AppCompatActivity {
                     @Override
                     public void OnError(int errorCode) {
 
+                        Vibrator v = (Vibrator) ChooseDayActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                        v.vibrate(1000);
+
                         if (errorCode == ServerListCallback.PRECONDITION_FAILED){
-                            Vibrator v = (Vibrator) ChooseDayActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-                            v.vibrate(1000);
+
                             showPaymentDialog();
+                        } else if (errorCode == ServerListCallback.NOT_ACCEPTABLE){
+
+                            showFullCapacityDialog();
                         }
                         Log.e("fail", "fail");
                     }
@@ -129,6 +137,34 @@ public class ChooseDayActivity extends AppCompatActivity {
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    private void showFullCapacityDialog(){
+
+        AlertDialog.Builder fullCapacityDialogBuilder = new AlertDialog.Builder(
+                ChooseDayActivity.this);
+
+        // set title
+        fullCapacityDialogBuilder.setTitle("Train is Full");
+
+        // set dialog message
+        fullCapacityDialogBuilder
+                .setMessage("Oops. It seems the train is full, for this departure on some stations. Try picking another date.")
+                .setCancelable(false)
+
+                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = fullCapacityDialogBuilder.create();
 
         // show it
         alertDialog.show();

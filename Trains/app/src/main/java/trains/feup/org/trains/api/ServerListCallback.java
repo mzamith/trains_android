@@ -8,14 +8,15 @@ import org.json.JSONArray;
 
 public interface ServerListCallback {
 
-    public static int OK = 200;
-    public static int UNAUTHORIZED = 401;
-    public static int FORBIDDEN = 403;
-    public static int NOT_FOUND = 404;
-    public static int TIMEOUT = 408;
-    public static int CONFLICT = 409;
-    public static int INTERNAL_SERVER_ERROR = 500;
-    public static int PRECONDITION_FAILED = 412;
+    int OK = 200;
+    int UNAUTHORIZED = 401;
+    int FORBIDDEN = 403;
+    int NOT_FOUND = 404;
+    int TIMEOUT = 408;
+    int CONFLICT = 409;
+    int INTERNAL_SERVER_ERROR = 500;
+    int PRECONDITION_FAILED = 412;
+    int NOT_ACCEPTABLE = 406;
 
     void OnSuccess(JSONArray result);
 
