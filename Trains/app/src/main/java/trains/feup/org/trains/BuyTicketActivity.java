@@ -53,7 +53,7 @@ public class BuyTicketActivity extends AppCompatActivity {
         detailDuration = (TextView) findViewById(R.id.detail_duration);
         detailTrain = (TextView) findViewById(R.id.detail_train);
 
-        button = (FloatingActionButton) findViewById(R.id.buy_button);
+        button = (FloatingActionButton) findViewById(R.id.next_button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
