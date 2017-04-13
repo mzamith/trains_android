@@ -90,6 +90,6 @@
             android:layout_gravity="end"
             android:layout_weight="0.05"
             android:gravity="end"
-            android:src="@drawable/ic_arrow_forward_black_24dp" />
+            android:src="@drawable/ic_qrcode_black_24dp" />
     </LinearLayout>
 </LinearLayout>
