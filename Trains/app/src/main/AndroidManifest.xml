@@ -80,6 +80,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="trains.feup.org.trains.TimetableActivity" />
         </activity>
+        <activity
+            android:name=".TicketDetailActivity"
+            android:label="@string/title_activity_ticket_detail"
+            android:parentActivityName=".WalletActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="trains.feup.org.trains.TimetableActivity" />
+        </activity>
     </application>
 
 </manifest>

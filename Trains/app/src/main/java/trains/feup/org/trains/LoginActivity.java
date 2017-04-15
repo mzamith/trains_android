@@ -204,8 +204,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleError(int error){
-        if (error == ServerObjectCallback.UNAUTHORIZED){
+        if (error == ServerObjectCallback.UNAUTHORIZED) {
             mError.setText(getString(R.string.error_unauthorized));
+        }else if (error == ServerObjectCallback.NOT_FOUND){
+            mError.setText(getString(R.string.error_connection));
         }else {
             mError.setText(getString(R.string.error_server));
         }

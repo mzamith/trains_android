@@ -25,7 +25,7 @@
     <string name="error_password_match">Password and Confirm Password do not match</string>
     <string name="error_conflict">Oops, that address is already taken</string>
     <string name="error_server">Internal Server Error</string>
-    <string name="error_unauthorized">Invalid username or passoword</string>
+    <string name="error_unauthorized">Invalid username or password</string>
     <string name="error_connection">Connection Error</string>
 
     <string name="permission_rationale">"Contacts permissions are needed for providing email
@@ -38,6 +38,7 @@
     <string name="title_activity_schedule">Schedule</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="title_activity_ticket_detail">Ticket</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -66,6 +67,7 @@
     <string name="activity_ticket_detail_to">detail</string>
 
     <string name="extra_travel">extra_travel</string>
+    <string name="extra_ticket">extra_ticket</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"

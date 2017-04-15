@@ -63,7 +63,14 @@ public class WalletActivity extends DrawerActivity {
                 //TODO CONNECT WITH TICKET DETAIL!!
 
                 Ticket item = (Ticket) adapter.getItemAtPosition(position);
-                Toast.makeText(WalletActivity.this, "Clicked on item" + item.getCode(), Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(WalletActivity.this, TicketDetailActivity.class);
+
+                //useful? idk
+                intent.putExtra(getString(R.string.extra_ticket), item);
+                startActivity(intent);
+
+              //  Toast.makeText(WalletActivity.this, "Clicked on item" + item.getCode(), Toast.LENGTH_LONG).show();
             }
         });
 
