@@ -63,11 +63,9 @@
     <string name="departure_station_search">Dep Station Search</string>
     <string name="arrival_station_search">Arr Station Search</string>
     <string name="title_activity_results">ResultsActivity</string>
-    <string name="activity_ticket_detail_from">deta1il</string>
-    <string name="activity_ticket_detail_to">detail</string>
 
     <string name="extra_travel">extra_travel</string>
-    <string name="extra_ticket">extra_ticket</string>
+    <string name="extra_ticket">Ticket_ID</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -158,4 +156,11 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="activity_ticket_detail_from">From: </string>
+     <string name="activity_ticket_detail_departure">Departure Not Found</string>
+     <string name="activity_ticket_detail_to">To: </string> 
+    <string name="activity_ticket_detail_destination">Destination Not Found</string>
+     <string name="activity_ticket_detail_dateTitle">Date:</string>
+     <string name="activity_ticket_detail_date">Date Not Found</string>
+     <string name="activity_ticket_detail_price">Price Not Found</string>
 </resources>

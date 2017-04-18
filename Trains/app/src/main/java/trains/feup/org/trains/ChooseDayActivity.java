@@ -1,8 +1,11 @@
 package trains.feup.org.trains;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteAbortException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -24,6 +29,8 @@ import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.model.Ticket;
 import trains.feup.org.trains.model.Travel;
 import trains.feup.org.trains.service.TicketService;
+import trains.feup.org.trains.storage.TicketsContract;
+import trains.feup.org.trains.storage.TicketsDbHelper;
 
 public class ChooseDayActivity extends AppCompatActivity {
 
@@ -60,6 +67,30 @@ public class ChooseDayActivity extends AppCompatActivity {
                 service.buyTicket(ChooseDayActivity.this, ticket, new ServerObjectCallback() {
                     @Override
                     public void OnSuccess(JSONObject result) {
+
+                        Gson gson = new Gson();
+                        Ticket ticket = gson.fromJson(result.toString(), Ticket.class);
+
+                        //Add Ticket to Local Storage
+                        TicketsDbHelper ticketsDbHelper = new TicketsDbHelper(TrainsApp.getContext());
+
+                        try (SQLiteDatabase db = ticketsDbHelper.getWritableDatabase()) {
+
+                            ContentValues values = new ContentValues();
+
+                            values.put(TicketsContract.TicketEntry.COLUMN_ID, ticket.getId());
+                            values.put(TicketsContract.TicketEntry.COLUMN_DATE, ticket.getDay());
+                            values.put(TicketsContract.TicketEntry.COLUMN_DEPARTURE, ticket.getDeparture().getFrom().toString());
+                            values.put(TicketsContract.TicketEntry.COLUMN_TO_STATION, ticket.getTo().toString());
+                            values.put(TicketsContract.TicketEntry.COLUMN_PRICE, ticket.getPrice());
+                            values.put(TicketsContract.TicketEntry.COLUMN_STATE, ticket.getState());
+
+                            db.insert(TicketsContract.TicketEntry.TABLE_NAME, null, values);
+
+                        } catch(SQLiteAbortException e){
+                            Log.e("ERROR", e.getStackTrace().toString());
+                        }
+
 
                         Intent intent = new Intent(ChooseDayActivity.this, WalletActivity.class);
                         startActivity(intent);

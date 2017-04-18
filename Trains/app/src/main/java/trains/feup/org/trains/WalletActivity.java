@@ -60,14 +60,11 @@ public class WalletActivity extends DrawerActivity {
             @Override
             public void onItemClick(AdapterView<?>  adapter, View v, int position, long id){
 
-                //TODO CONNECT WITH TICKET DETAIL!!
-
                 Ticket item = (Ticket) adapter.getItemAtPosition(position);
 
                 Intent intent = new Intent(WalletActivity.this, TicketDetailActivity.class);
 
-                //useful? idk
-                intent.putExtra(getString(R.string.extra_ticket), item);
+                intent.putExtra(getString(R.string.extra_ticket), item.getId());
                 startActivity(intent);
 
               //  Toast.makeText(WalletActivity.this, "Clicked on item" + item.getCode(), Toast.LENGTH_LONG).show();
@@ -84,6 +81,9 @@ public class WalletActivity extends DrawerActivity {
 
             @Override
             public void OnSuccess(JSONArray result) {
+
+                // continue here implementing the sync from external database to local 
+
 
                 adapter.clear();
 
