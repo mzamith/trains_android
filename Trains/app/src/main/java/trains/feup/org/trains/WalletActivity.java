@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,8 +67,6 @@ public class WalletActivity extends DrawerActivity {
 
                 intent.putExtra(getString(R.string.extra_ticket), item.getId());
                 startActivity(intent);
-
-              //  Toast.makeText(WalletActivity.this, "Clicked on item" + item.getCode(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -143,7 +142,7 @@ public class WalletActivity extends DrawerActivity {
                 departure.setText(ticket.getFrom().getLabel());
                 arrival.setText(ticket.getTo().getLabel());
 
-                DateFormat df = new SimpleDateFormat("dd/MM");
+                DateFormat df = new SimpleDateFormat("dd/MM/yy");
                 date.setText(df.format(new Date(ticket.getDay())));
 
                 switch (ticket.getState()){

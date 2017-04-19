@@ -11,18 +11,16 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/img_qr_code_image"
+            android:layout_width="match_parent"
+            android:layout_weight="1" />
 
         <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:ems="10"
-                android:text="@string/activity_ticket_detail_from"
-                android:textStyle="bold" />
-
             <TextView
                 android:id="@+id/ticket_departure"
                 android:layout_width="wrap_content"
@@ -30,8 +28,18 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:ems="10"
-                android:text="@string/activity_ticket_detail_departure"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="@string/activity_ticket_detail_departure"/>
+
+            <TextView
+                android:id="@+id/ticket_departure_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:ems="10"
+                android:textStyle="bold"
+                android:text="@string/activity_ticket_detail_date"/>
         </TableRow>
 
         <TableRow>
@@ -42,8 +50,10 @@
                 android:layout_alignParentTop="true"
                 android:ems="10"
                 android:text="@string/activity_ticket_detail_to"
-                android:textStyle="bold" />
+                android:textAlignment="center" />
+        </TableRow>
 
+        <TableRow>
             <TextView
                 android:id="@+id/ticket_destination"
                 android:layout_width="wrap_content"
@@ -51,50 +61,23 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:ems="10"
-                android:text="@string/activity_ticket_detail_destination"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="@string/activity_ticket_detail_destination"/>
         </TableRow>
 
-        <TableRow>
-            <ImageView
-                android:id="@+id/img_qr_code_image"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-        </TableRow>
+
 
         <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:ems="10"
-                android:text="@string/activity_ticket_detail_dateTitle"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/ticket_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:ems="10"
-                android:text="@string/activity_ticket_detail_date"
-                android:textStyle="bold" />
-        </TableRow>
-
-        <TableRow>
+            <TextView/>
             <TextView
                 android:id="@+id/ticket_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:textAlignment="textEnd"
                 android:ems="10"
-                android:text="@string/activity_ticket_detail_price"
-                android:textStyle="bold" />
+                android:text="@string/activity_ticket_detail_price"/>
         </TableRow>
-
     </TableLayout>
 </RelativeLayout>

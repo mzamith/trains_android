@@ -156,11 +156,9 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="activity_ticket_detail_from">From: </string>
      <string name="activity_ticket_detail_departure">Departure Not Found</string>
-     <string name="activity_ticket_detail_to">To: </string> 
+     <string name="activity_ticket_detail_to">to</string> 
     <string name="activity_ticket_detail_destination">Destination Not Found</string>
-     <string name="activity_ticket_detail_dateTitle">Date:</string>
      <string name="activity_ticket_detail_date">Date Not Found</string>
      <string name="activity_ticket_detail_price">Price Not Found</string>
 </resources>

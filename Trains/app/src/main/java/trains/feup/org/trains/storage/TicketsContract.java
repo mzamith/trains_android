@@ -16,11 +16,13 @@ public final class TicketsContract {
     public static class TicketEntry implements BaseColumns {
         public static final String TABLE_NAME = "Tickets";
         public static final String COLUMN_ID = "id";
-        public static final String COLUMN_DATE = "effective_date";
+        public static final String COLUMN_DATE = "date";
         public static final String COLUMN_DEPARTURE = "from_station";
-        public static final String COLUMN_TO_STATION = "to_station";
+        public static final String COLUMN_DEPARTURE_TIME = "departure_time";
+        public static final String COLUMN_DESTINATION = "destination";
         public static final String COLUMN_PRICE = "price";
-        public static final String COLUMN_STATE = "current_state";
+        public static final String COLUMN_STATE = "state";
+        public static final String COLUMN_CODE_DTO = "codeDTO";
 
 
     }
@@ -32,8 +34,10 @@ public final class TicketsContract {
                         TicketEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
                         TicketEntry.COLUMN_DATE + " INTEGER, " +
                         TicketEntry.COLUMN_DEPARTURE + " TEXT, " +
-                        TicketEntry.COLUMN_TO_STATION + " TEXT, " +
+                        TicketEntry.COLUMN_DEPARTURE_TIME + " INTEGER, " +
+                        TicketEntry.COLUMN_DESTINATION + " TEXT, " +
                         TicketEntry.COLUMN_PRICE + " REAL, " +
-                        TicketEntry.COLUMN_STATE + " TEXT " +
+                        TicketEntry.COLUMN_STATE + " TEXT, " +
+                        TicketEntry.COLUMN_CODE_DTO + " TEXT " +
                         " );";
 }

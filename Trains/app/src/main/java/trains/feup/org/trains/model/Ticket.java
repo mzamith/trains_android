@@ -5,6 +5,7 @@
  */
 package trains.feup.org.trains.model;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -37,6 +38,8 @@ public class Ticket extends ReferenceEntity {
     private String state;
 
     private long day;
+
+    private String codeDTO;
 
     public Ticket() {
 	    super();
@@ -95,6 +98,14 @@ public class Ticket extends ReferenceEntity {
 
     public void setDay(long day) {
         this.day = day;
+    }
+
+    public String getCodeDTO(){
+        return codeDTO;
+    }
+
+    public void setCodeDTO(String code){
+        codeDTO = code;
     }
 
     @Override

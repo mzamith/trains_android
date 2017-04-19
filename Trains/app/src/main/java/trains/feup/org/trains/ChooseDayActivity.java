@@ -81,16 +81,21 @@ public class ChooseDayActivity extends AppCompatActivity {
                             values.put(TicketsContract.TicketEntry.COLUMN_ID, ticket.getId());
                             values.put(TicketsContract.TicketEntry.COLUMN_DATE, ticket.getDay());
                             values.put(TicketsContract.TicketEntry.COLUMN_DEPARTURE, ticket.getDeparture().getFrom().toString());
-                            values.put(TicketsContract.TicketEntry.COLUMN_TO_STATION, ticket.getTo().toString());
+                            values.put(TicketsContract.TicketEntry.COLUMN_DEPARTURE_TIME, ticket.getDeparture().getTime());
+                            values.put(TicketsContract.TicketEntry.COLUMN_DESTINATION, ticket.getTo().toString());
                             values.put(TicketsContract.TicketEntry.COLUMN_PRICE, ticket.getPrice());
                             values.put(TicketsContract.TicketEntry.COLUMN_STATE, ticket.getState());
+                            values.put(TicketsContract.TicketEntry.COLUMN_CODE_DTO, ticket.getCodeDTO());
+
 
                             db.insert(TicketsContract.TicketEntry.TABLE_NAME, null, values);
+                            Log.i("SQLite Tickets", "Ticket inserted into local SQLite database");
 
                         } catch(SQLiteAbortException e){
                             Log.e("ERROR", e.getStackTrace().toString());
                         }
 
+                        ticketsDbHelper.close();
 
                         Intent intent = new Intent(ChooseDayActivity.this, WalletActivity.class);
                         startActivity(intent);
