@@ -102,7 +102,7 @@ public class TicketDetailActivity extends AppCompatActivity {
             departureTime = cursor.getLong(cursor.getColumnIndexOrThrow(TicketsContract.TicketEntry.COLUMN_DEPARTURE_TIME));
             destination = cursor.getString(cursor.getColumnIndexOrThrow(TicketsContract.TicketEntry.COLUMN_DESTINATION));
             price = cursor.getLong(cursor.getColumnIndexOrThrow(TicketsContract.TicketEntry.COLUMN_PRICE));
-            price *= 0.1;
+            price *= 0.01;
             qrContent = cursor.getString(cursor.getColumnIndexOrThrow(TicketsContract.TicketEntry.COLUMN_CODE_DTO));
             cursor.close();
 
