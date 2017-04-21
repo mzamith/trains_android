@@ -23,8 +23,8 @@ import trains.feup.org.tickets.util.JsonUtil;
 
 public class UserService extends Service {
 
-    public UserService() {
-        super();
+    public UserService(Context context) {
+        super(context);
     }
 
 
@@ -35,23 +35,22 @@ public class UserService extends Service {
 
         JsonObjectRequest loginRequest = ApiInvoker.login(postBody, callback);
 
-        VolleySingleton.getInstance(context).addToRequestQueue(loginRequest);
+        VolleySingleton.getInstance(getContext()).getRequestQueue().add(loginRequest);
 
     }
 
-    public void logout() {
+    public void logout(Context context) {
 
-        preferences.edit().remove(context.getString(R.string.saved_token)).commit();
+        getPreferences().edit().remove(context.getString(R.string.saved_token)).apply();
 
         Intent intent = new Intent(context, LoginActivity.class);
-        context.startActivity(intent);
+        getContext().startActivity(intent);
     }
 
 
     private JSONObject buildCredentials(String username, String password) {
         try {
-            JSONObject postBody = new JSONObject(JsonUtil.serialize(new Credentials(username, password)));
-            return postBody;
+            return new JSONObject(JsonUtil.serialize(new Credentials(username, password)));
 
         } catch (JSONException e) {
             Log.e("Exception in Service", "Error serializing Credentials");

@@ -13,6 +13,10 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_login_register"><u>Do not have a login? Please Register</u></string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_download">Download</string>
+
+    <string name="spinner_lines_prompt">Line:</string>
+    <string name="download_tickets">Download Tickets</string>
 
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -25,7 +29,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="error_connection">Connection Error</string>
+
     <string name="saved_token">TokenInspector</string>
+    <string name="selected_line">Selected Line</string>
+    <string name="selected_departure">Selected Line</string>
+    <string name="saved_lines">Saved Lines</string>
+    <string name="saved_departures">Saved Departures</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_drawer">DrawerActivity</string>
 
@@ -33,4 +44,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_validate_ticket">ValidateTicketActivity</string>
 </resources>

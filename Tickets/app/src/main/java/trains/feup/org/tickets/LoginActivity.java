@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    //private UserLoginTask mAuthTask = null;
+    //private_key UserLoginTask mAuthTask = null;
 
     // UI references.
     private EditText mEmailView;
@@ -114,12 +114,12 @@ public class LoginActivity extends AppCompatActivity {
             // perform the user login attempt.
             progress.showProgress();
 
-            UserService service = new UserService();
+            UserService service = new UserService(getApplicationContext());
             final JSONObject[] jsonObject = new JSONObject[1];
 
             service.login(getApplicationContext(), email, password, new ServerCallback<JSONObject>() {
                 @Override
-                public void OnSuccess(JSONObject result) {
+                public void onSuccess(JSONObject result) {
                     Log.i("Result", result.toString());
 
                     try {
@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void OnError(int error) {
+                public void onError(int error) {
                     Log.i("Result", String.valueOf(error));
                     handleError(error);
                     progress.showProgress(false);
@@ -159,7 +159,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void startMainActivity() {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        //Main activity only showed the token. Unnecessary for the final app. Will show the download tickets instead
+//        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, DownloadTicketsActivity.class);
         startActivity(intent);
     }
 

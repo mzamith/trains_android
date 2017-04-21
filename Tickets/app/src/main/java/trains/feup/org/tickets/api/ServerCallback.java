@@ -14,7 +14,7 @@ public interface ServerCallback<T> {
     public static int CONFLICT = 409;
     public static int INTERNAL_SERVER_ERROR = 500;
 
-    void OnSuccess(T result);
+    void onSuccess(T result);
 
-    void OnError(int errorCode);
+    void onError(int errorCode);
 }

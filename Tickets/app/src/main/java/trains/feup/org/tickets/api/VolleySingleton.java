@@ -2,9 +2,9 @@ package trains.feup.org.tickets.api;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.LruCache;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
@@ -13,14 +13,16 @@ import com.android.volley.toolbox.Volley;
  * Created by Renato on 3/22/2017.
  */
 public class VolleySingleton {
+
+    private static final String TAG = VolleySingleton.class.getName();
+
     private static VolleySingleton instance;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
-    private static Context context;
 
     private VolleySingleton(Context context) {
-        VolleySingleton.context = context;
-        requestQueue = getRequestQueue();
+        Log.i(TAG, "VolleySingleton");
+        requestQueue = Volley.newRequestQueue(context);
 
         imageLoader = new ImageLoader(requestQueue,
                 new ImageLoader.ImageCache() {
@@ -40,6 +42,7 @@ public class VolleySingleton {
     }
 
     public static synchronized VolleySingleton getInstance(Context context) {
+        Log.i(TAG, "getInstance");
         if (instance == null) {
             instance = new VolleySingleton(context);
         }
@@ -47,16 +50,7 @@ public class VolleySingleton {
     }
 
     public RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
-            requestQueue = Volley.newRequestQueue(context.getApplicationContext());
-        }
         return requestQueue;
-    }
-
-    public <T> void addToRequestQueue(Request<T> req) {
-        getRequestQueue().add(req);
     }
 
     public ImageLoader getImageLoader() {

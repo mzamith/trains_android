@@ -1,25 +1,24 @@
 package trains.feup.org.trains;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import trains.feup.org.trains.api.ServerObjectCallback;
 import trains.feup.org.trains.service.UserService;
@@ -48,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        checkInternetConnection();
 
         checkLoginStatus();
         showErrorMessageToast(getIntent().getIntExtra(getString(R.string.error_connection), 0));
@@ -79,6 +80,24 @@ public class LoginActivity extends AppCompatActivity {
         progress = new ProgressHandler(mProgressView, mLoginFormView, this);
     }
 
+    private void checkInternetConnection() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null;
+        if (isConnected)
+            isConnected = activeNetwork.isConnected();
+
+        if (!isConnected) {
+            startWalletActivity();
+        }
+    }
+
+    private void startWalletActivity() {
+        Intent intent = new Intent(this, WalletActivity.class);
+        startActivity(intent);
+    }
 
 
     /**
@@ -140,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                         saveToken(token);
                         startSearchActivity();
 
-                    } catch (JSONException je){
+                    } catch (JSONException je) {
                         Log.e("TOKEN ERROR", je.toString());
                     }
 
@@ -170,19 +189,19 @@ public class LoginActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
-    private void startRegisterActivity(){
+    private void startRegisterActivity() {
 
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
-    private void startSearchActivity(){
+    private void startSearchActivity() {
 
         Intent intent = new Intent(this, SearchTripsActivity.class);
         startActivity(intent);
     }
 
-    private void saveToken(String token){
+    private void saveToken(String token) {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferences.edit();
@@ -192,30 +211,30 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void checkLoginStatus(){
+    private void checkLoginStatus() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String  data = sharedPreferences.getString(getString(R.string.saved_token), "") ;
+        String data = sharedPreferences.getString(getString(R.string.saved_token), "");
 
-        if (data != null && !data.isEmpty()){
+        if (data != null && !data.isEmpty()) {
             startSearchActivity();
         }
 
     }
 
-    private void handleError(int error){
+    private void handleError(int error) {
         if (error == ServerObjectCallback.UNAUTHORIZED) {
             mError.setText(getString(R.string.error_unauthorized));
-        }else if (error == ServerObjectCallback.NOT_FOUND){
+        } else if (error == ServerObjectCallback.NOT_FOUND) {
             mError.setText(getString(R.string.error_connection));
-        }else {
+        } else {
             mError.setText(getString(R.string.error_server));
         }
     }
 
-    private void showErrorMessageToast(int errorCode){
+    private void showErrorMessageToast(int errorCode) {
 
-        switch (errorCode){
+        switch (errorCode) {
             case ServerObjectCallback.NOT_FOUND:
                 Toast.makeText(this, "Make sure you have Wifi Connection", Toast.LENGTH_LONG).show();
                 break;

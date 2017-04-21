@@ -2,8 +2,6 @@ package trains.feup.org.trains.storage;
 
 import android.provider.BaseColumns;
 
-import trains.feup.org.trains.model.Ticket;
-
 /**
  * Created by leonardoaxe on 04/04/2017.
  */
@@ -30,14 +28,17 @@ public final class TicketsContract {
     public static final String TEST_CREATE = "CREATE TABLE Tickets (TicketID int);";
 
     public static final String SQL_CREATE_TABLE_TICKETS =
-                "CREATE TABLE " + TicketEntry.TABLE_NAME + " ( " +
-                        TicketEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                        TicketEntry.COLUMN_DATE + " INTEGER, " +
-                        TicketEntry.COLUMN_DEPARTURE + " TEXT, " +
-                        TicketEntry.COLUMN_DEPARTURE_TIME + " INTEGER, " +
-                        TicketEntry.COLUMN_DESTINATION + " TEXT, " +
-                        TicketEntry.COLUMN_PRICE + " REAL, " +
-                        TicketEntry.COLUMN_STATE + " TEXT, " +
-                        TicketEntry.COLUMN_CODE_DTO + " TEXT " +
-                        " );";
+            "CREATE TABLE " + TicketEntry.TABLE_NAME + " ( " +
+                    TicketEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                    TicketEntry.COLUMN_DATE + " INTEGER, " +
+                    TicketEntry.COLUMN_DEPARTURE + " TEXT, " +
+                    TicketEntry.COLUMN_DEPARTURE_TIME + " INTEGER, " +
+                    TicketEntry.COLUMN_DESTINATION + " TEXT, " +
+                    TicketEntry.COLUMN_PRICE + " REAL, " +
+                    TicketEntry.COLUMN_STATE + " TEXT, " +
+                    TicketEntry.COLUMN_CODE_DTO + " TEXT " +
+                    " );";
+
+    public static final String SQL_DELETE_TABLE_TICKETS =
+            "DROP TABLE IF EXISTS " + TicketEntry.TABLE_NAME;
 }

@@ -41,7 +41,7 @@ public class ApiInvoker {
                         Log.i(TAG, "onResponse");
                         Log.i(TAG, "Response: " + response);
                         try {
-                            callback.OnSuccess(response);
+                            callback.onSuccess(response);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -60,7 +60,7 @@ public class ApiInvoker {
                             if (error instanceof ServerError) {
                                 try {
 
-                                    callback.OnError(response.statusCode);
+                                    callback.onError(response.statusCode);
 
                                     String res = new String(response.data,
                                             HttpHeaderParser.parseCharset(response.headers, "utf-8"));
@@ -73,7 +73,7 @@ public class ApiInvoker {
                                     e.printStackTrace();
                                 }
                             } else {
-                                callback.OnError(response.statusCode);
+                                callback.onError(response.statusCode);
                             }
                         }
                     }
@@ -93,7 +93,7 @@ public class ApiInvoker {
         };
     }
 
-    public static JsonArrayRequest getMany(final String url, final String token, final ServerCallback<JSONArray> callback) {
+    public static JsonArrayRequest getList(final String url, final String token, final ServerCallback<JSONArray> callback) {
 
         Log.i(TAG, "getMany");
 
@@ -106,7 +106,7 @@ public class ApiInvoker {
                         try {
                             Log.i(TAG, "onResponse");
                             Log.i(TAG, "Response: " + response);
-                            callback.OnSuccess(response);
+                            callback.onSuccess(response);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -125,7 +125,7 @@ public class ApiInvoker {
                             if (error instanceof ServerError) {
                                 try {
 
-                                    callback.OnError(response.statusCode);
+                                    callback.onError(response.statusCode);
 
                                     String res = new String(response.data,
                                             HttpHeaderParser.parseCharset(response.headers, "utf-8"));
@@ -138,7 +138,7 @@ public class ApiInvoker {
                                     e.printStackTrace();
                                 }
                             } else {
-                                callback.OnError(response.statusCode);
+                                callback.onError(response.statusCode);
                             }
                         }
                     }
@@ -165,7 +165,7 @@ public class ApiInvoker {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            callback.OnSuccess(response);
+                            callback.onSuccess(response);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -179,7 +179,7 @@ public class ApiInvoker {
                         if (error instanceof ServerError && response != null) {
                             try {
 
-                                callback.OnError(response.statusCode);
+                                callback.onError(response.statusCode);
 
 
                                 //This is just for debbuging.
@@ -199,7 +199,7 @@ public class ApiInvoker {
                                 e2.printStackTrace();
                             }
                         } else {
-                            callback.OnError(response.statusCode);
+                            callback.onError(response.statusCode);
                         }
                     }
                 }
@@ -234,7 +234,7 @@ public class ApiInvoker {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            callback.OnSuccess(response);
+                            callback.onSuccess(response);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -250,7 +250,7 @@ public class ApiInvoker {
                         if (error instanceof ServerError && response != null) {
                             try {
 
-                                callback.OnError(response.statusCode);
+                                callback.onError(response.statusCode);
 
                                 String res = new String(response.data,
                                         HttpHeaderParser.parseCharset(response.headers, "utf-8"));
@@ -266,7 +266,7 @@ public class ApiInvoker {
                                 e2.printStackTrace();
                             }
                         } else {
-                            callback.OnError(response.statusCode);
+                            callback.onError(response.statusCode);
                         }
                     }
                 }

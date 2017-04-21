@@ -1,5 +1,6 @@
 package trains.feup.org.tickets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,8 @@ import trains.feup.org.tickets.service.UserService;
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = DrawerActivity.class.getName();
+
     protected DrawerLayout drawer;
 
     @Override
@@ -27,7 +30,7 @@ public class DrawerActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -68,14 +71,16 @@ public class DrawerActivity extends AppCompatActivity
 
         if (id == R.id.nav_search) {
             // Handle the action
+            Intent intent = new Intent(this, DownloadTicketsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_wallet) {
+            Intent intent = new Intent(this, ValidateTicketActivity.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_timetable) {
+        } else if (id == R.id.nav_logout) {
 
-        } else if (id == R.id.nav_logout){
-
-            UserService service = new UserService();
-            service.logout();
+            UserService service = new UserService(getApplicationContext());
+            service.logout(getApplicationContext());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

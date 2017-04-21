@@ -10,10 +10,6 @@
             android:id="@+id/nav_wallet"
             android:icon="@drawable/ic_perm_device_information_black_24dp"
             android:title="Validate Tickets" />
-        <item
-            android:id="@+id/nav_timetable"
-            android:icon="@drawable/ic_trending_down_black_24dp"
-            android:title="Statistics" />
    <!--     <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

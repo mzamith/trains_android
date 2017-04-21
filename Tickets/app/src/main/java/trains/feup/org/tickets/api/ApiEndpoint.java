@@ -6,7 +6,7 @@ package trains.feup.org.tickets.api;
 public interface ApiEndpoint {
 
     //Add more relevant endpoints;
-    String ENDPOINT = "http://192.168.2.12:8080";
+    String ENDPOINT = "http://192.168.1.67:8080";
     String LINES_ENDPOINT = ENDPOINT + "/api/lines";
     String LOGIN_ENDPOINT = ENDPOINT + "/logininspector";
     String DEPARTURES_ENDPOINT = ENDPOINT + "/api/departures";

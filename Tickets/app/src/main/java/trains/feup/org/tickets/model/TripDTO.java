@@ -6,30 +6,32 @@
 package trains.feup.org.tickets.model;
 
 
+import java.io.Serializable;
+
 /**
- * The Trip class is an entity model object. It holds duration (expressed in
- * seconds), distance (expressed in meters) and the designated {@link Line}
- * between two {@link Station}.
+ * The TripDTO class is an entity model object. It holds duration (expressed in
+ * seconds), distance (expressed in meters) and the designated {@link LineDTO}
+ * between two {@link StationDTO}.
  *
  * @author Renato Ayres
  */
 
-public class Trip extends ReferenceEntity {
+public class TripDTO implements Serializable {
 
     /**
-     * The Line in which this trip is part of.
+     * The LineDTO in which this trip is part of.
      */
-    private Line line;
+    private LineDTO line;
 
     /**
-     * Station where the train comes from.
+     * StationDTO where the train comes from.
      */
-    private Station from;
+    private StationDTO from;
 
     /**
-     * Station where the train goes to.
+     * StationDTO where the train goes to.
      */
-    private Station to;
+    private StationDTO to;
 
     /**
      * Duration of the trip, expressed in seconds.
@@ -41,31 +43,31 @@ public class Trip extends ReferenceEntity {
      */
     private Long distance;
 
-    public Trip() {
+    public TripDTO() {
         super();
     }
 
-    public Line getLine() {
+    public LineDTO getLine() {
         return line;
     }
 
-    public void setLine(Line line) {
+    public void setLine(LineDTO line) {
         this.line = line;
     }
 
-    public Station getFrom() {
+    public StationDTO getFrom() {
         return from;
     }
 
-    public void setFrom(Station from) {
+    public void setFrom(StationDTO from) {
         this.from = from;
     }
 
-    public Station getTo() {
+    public StationDTO getTo() {
         return to;
     }
 
-    public void setTo(Station to) {
+    public void setTo(StationDTO to) {
         this.to = to;
     }
 
